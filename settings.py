@@ -2,10 +2,10 @@ from os import environ
 
 SESSION_CONFIGS = [
     dict(
-        name='Cuestionario',
+        name='informality_experiment',
         display_name='Cuestionario',
         num_demo_participants=1,
-        app_sequence=['Cuestionario'],
+        app_sequence=['informality_experiment'],
     ),  
 ]
 
@@ -27,7 +27,7 @@ LANGUAGE_CODE = 'es'
 
 # e.g. EUR, GBP, CNY, JPY
 REAL_WORLD_CURRENCY_CODE = 'USD'
-USE_POINTS = True
+USE_POINTS = False
 
 ADMIN_USERNAME = 'admin'
 # for security, best to set admin password in an environment variable
