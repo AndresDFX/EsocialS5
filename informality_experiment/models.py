@@ -92,12 +92,6 @@ class Group(BaseGroup):
 class Player(BasePlayer):
 
     payment_total = makefield_integer()
-
-# ******************************************************************************************************************** #
-# *** Consent Page
-# ******************************************************************************************************************** #
-    accepts_terms = models.BooleanField()
-
 # ******************************************************************************************************************** #
 # *** STAGE 1
 # ******************************************************************************************************************** #
@@ -110,9 +104,16 @@ class Player(BasePlayer):
     decision_phase_2 = makefield_urn_decision()
     decision_phase_3 = makefield_urn_decision()
     decision_phase_4 = makefield_urn_decision()
+    token_value_phase_1 = makefield_integer()
+    token_value_phase_2 = makefield_integer()
+    token_value_phase_3 = makefield_integer()
+    token_value_phase_4 = makefield_integer()
     answer_correct_stage1 = makefield_integer()
 
-    ########## Phase 1 #############
+    ############################ Consent ############################
+    accepts_terms = models.BooleanField()
+
+    ############################ Instructions ############################
     question_1_stage1_instructions = makefield_string(
         '1. ¿Cuál es el valor mínimo de las fichas de la Urna Z?',
         choices_gen_instructions1
@@ -132,12 +133,6 @@ class Player(BasePlayer):
         '4.	Si para las rondas 6-10 escoges la urna Z y sale al azar una ficha de 7 puntos, ¿cuántos pesos ganarás por 10 respuestas correctas?',
         choices_gen_instructions3
     )
-
-# ******************************************************************************************************************** #
-# *** Validaciones
-# ******************************************************************************************************************** #
-
-
 
 # ******************************************************************************************************************** #
 # *** STAGE 2

@@ -1,0 +1,69 @@
+{% extends "informality_experiment/base/global.html" %}
+
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
+
+{% block styles %}
+    {{ super() }}
+    <style>
+        .row {
+            display: flex;
+        }
+            
+        .column {
+            flex: 50%;
+        }
+    </style>
+{% endblock %}
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+
+{% block title %}
+    Inicio Etapa 1
+{% endblock %}
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+
+{% block content %}
+    {{ super() }}
+
+    <div class="row">
+        <div class="column">
+            <a href="" target="_blank" class="urn" id="Y"><img src="{% static 'images/1stage/urn.png' %}" /></a>
+            <p>Urna (Y): Esta urna contiene fichas con valores del 0 al 10. la mitad de las fichas ofrecen entre 3 y 8 puntos.</p>
+        </div>
+        <div class="column">
+            <a href="" target="_blank" class="urn" id="Z"><img src="{% static 'images/1stage/urn.png' %}" /></a>
+            <p> Urna (Z): Esta urna contiene fichas con valores del 2 al 8. la mitad de las fichas ofrecen entre 2 y 6 puntos.</p>
+            <i>Recuerda que la Urna (Z) presenta un formulario adicional cada que es seleccionado</i>
+        </div>
+    </div>
+
+    <!--Boton de siguiente-->
+    <p>
+        <button class="otree-btn-next btn btn-primary" style="display:none;"> Siguiente</button>
+    </p>
+
+{% endblock %}
+
+{# ****************************************************************************************************************** #}
+{# *** SCRIPTS *** #}
+{# ****************************************************************************************************************** #}
+
+{% block scripts %}
+    <script>
+
+        //Toma el evento clic de las imagenes obtiene y envia el valor del 'id'
+        $(".urn").on("click", function(event) {
+            event.preventDefault();
+            liveSend($(this).attr('id'));
+            $(".otree-btn-next").click();
+        });
+
+    </script>
+{% endblock %}

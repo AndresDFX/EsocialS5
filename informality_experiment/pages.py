@@ -59,10 +59,27 @@ class Stage1Questions(Page):
 
 #=======================================================================================================================
 
+class Stage1Start(Page):
+
+    def is_displayed(self):
+        if (self.round_number == 1 or self.round_number == 6 or 
+            self.round_number == 11 or self.round_number == 16):
+            return True
+
+    def live_method(self, data):
+        if self.round_number == 1:
+            self.decision_phase_1 = data
+        elif self.round_number == 6:
+            self.decision_phase_2 = data
+        elif self.round_number == 11:
+            self.decision_phase_3 = data
+        elif self.round_number == 16:
+            self.decision_phase_4 = data
+
 
 # ******************************************************************************************************************** #
 # *** MANAGEMENT PAGES
 # ******************************************************************************************************************** #
-stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions]
+stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions, Stage1Start]
 
 page_sequence = stage_1_sequence
