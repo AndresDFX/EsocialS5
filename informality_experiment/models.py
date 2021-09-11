@@ -40,6 +40,24 @@ def makefield_string(label, choices):
 def makefield_integer():
     return models.IntegerField(initial=0)
 
+def makefield_urnz_question1():
+    return models.StringField(
+        label='1. A continuación, por favor de una descripción detallada del por qué la Urna (Z) fue su elección.',
+        widget=widgets.TextArea
+)
+
+def makefield_urnz_question2():
+    return models.StringField(
+        label='2. ¿En caso de existir unos pagos más altos en la Urna (Y) mantendría su decisión actual?.',
+        widget=widgets.TextArea
+)
+
+def makefield_urnz_question3():
+    return models.StringField(
+        label='3. Por favor de una descripción detallada de cómo esta elección puede relacionarse con alguna actividad del día a día.',
+        widget=widgets.TextArea
+)
+
 # ******************************************************************************************************************** #
 # ***                                                           CHOICES
 # ******************************************************************************************************************** #
@@ -110,10 +128,10 @@ class Player(BasePlayer):
     token_value_phase_4 = makefield_integer()
     answer_correct_stage1 = makefield_integer()
 
-    ############################ Consent ############################
+    ############################### Consent #########################
     accepts_terms = models.BooleanField()
 
-    ############################ Instructions ############################
+    ############################ Instructions #######################
     question_1_stage1_instructions = makefield_string(
         '1. ¿Cuál es el valor mínimo de las fichas de la Urna Z?',
         choices_gen_instructions1
@@ -133,6 +151,27 @@ class Player(BasePlayer):
         '4.	Si para las rondas 6-10 escoges la urna Z y sale al azar una ficha de 7 puntos, ¿cuántos pesos ganarás por 10 respuestas correctas?',
         choices_gen_instructions3
     )
+
+    ############################ PHASE 1 ############################
+    question_1_phase1_urnz = makefield_urnz_question1()
+    question_2_phase1_urnz = makefield_urnz_question2()
+    question_3_phase1_urnz = makefield_urnz_question3()
+    
+    ############################ PHASE 2 ############################
+    question_1_phase2_urnz = makefield_urnz_question1()
+    question_2_phase2_urnz = makefield_urnz_question2()
+    question_3_phase2_urnz = makefield_urnz_question3()
+
+    ############################ PHASE 3 ############################
+    question_1_phase3_urnz = makefield_urnz_question1()
+    question_2_phase3_urnz = makefield_urnz_question2()
+    question_3_phase3_urnz = makefield_urnz_question3() 
+
+    ############################ PHASE 4 ############################
+    question_1_phase4_urnz = makefield_urnz_question1() 
+    question_2_phase4_urnz = makefield_urnz_question2()
+    question_3_phase4_urnz = makefield_urnz_question3()
+    
 
 # ******************************************************************************************************************** #
 # *** STAGE 2

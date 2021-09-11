@@ -58,7 +58,6 @@ class Stage1Questions(Page):
         return error_messages
 
 #=======================================================================================================================
-
 class Stage1Start(Page):
 
     def is_displayed(self):
@@ -76,10 +75,32 @@ class Stage1Start(Page):
         elif self.round_number == 16:
             self.decision_phase_4 = data
 
+#=======================================================================================================================
+class Stage1UrnZPreview(Page):
+
+    form_model = 'player'
+    form_fields = [
+        'question_1_phase1_urnz',
+        'question_2_phase1_urnz',
+        'question_3_phase1_urnz'
+    ]
+
+#=======================================================================================================================
+class Stage1Urn(Page):
+
+    def vars_for_template(self):
+        num_random = 0
+        urn_decision_label = self.player.decision_phase_1
+        self.player.token_value_phase_1 = num_random #Numero de ficha aleatoria en cada fase
+
+        return{
+            'num_random': num_random,
+            'urn_decision_label': urn_decision_label
+        }
 
 # ******************************************************************************************************************** #
 # *** MANAGEMENT PAGES
 # ******************************************************************************************************************** #
-stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions, Stage1Start]
-
+#stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions, Stage1Start, Stage1UrnZPreview, Stage1Urn]
+stage_1_sequence = [Stage1Start, Stage1Urn]
 page_sequence = stage_1_sequence
