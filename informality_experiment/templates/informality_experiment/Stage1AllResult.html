@@ -1,0 +1,30 @@
+{% extends "informality_experiment/base/global.html" %}
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    Ganancias Etapa 1
+{% endblock %}
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+
+{% block content %}
+    {{ super() }}
+    
+    A continuación, se muestran sus ganancias de la Etapa 1. <br><br>
+
+    <b>Etapa 1</b><br>
+    <ul>
+        <li><b>Ganancia Fase 1:</b> ${{payment_phase_1}}</li>
+        <li><b>Ganancia Fase 2:</b> ${{payment_phase_2}}</li>
+        <li><b>Ganancia Fase 3:</b> ${{payment_phase_3}}</li>
+        <li><b>Ganancia Fase 4:</b> ${{payment_phase_4}}</li><br>
+        <li><b>Ganancia Etapa 1:</b> ${{payment_stage_1}}</li>
+    </ul>
+    
+    {% next_button %}
+        
+{% endblock %}

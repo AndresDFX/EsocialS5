@@ -103,9 +103,9 @@ class Constants(BaseConstants):
     urn_z_token_max_random = 8
     urn_y_token_min_random = 0
     urn_y_token_max_random = 10
-    sub_rounds_stage_1 = 16
+    sub_rounds_stage_1 = 20
     rate_error = 2
-    num_seconds_stage_1 = 10
+    num_seconds_stage_1 = 5
     images_names_questions = [
         "1_5",
         "2_10",

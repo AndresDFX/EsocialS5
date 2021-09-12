@@ -99,6 +99,10 @@ class Stage1UrnZPreview(Page):
             return ['question_1_phase1_urnz', 'question_2_phase1_urnz', 'question_3_phase1_urnz']
         elif self.player.round_number == 6:
             return ['question_1_phase2_urnz', 'question_2_phase2_urnz', 'question_3_phase2_urnz']
+        elif self.player.round_number == 11:
+            return ['question_1_phase3_urnz', 'question_2_phase3_urnz', 'question_3_phase3_urnz']
+        elif self.player.round_number == 16:
+            return ['question_1_phase4_urnz', 'question_2_phase4_urnz', 'question_3_phase4_urnz']
 
     def js_vars(self):
         return dict(
@@ -144,7 +148,7 @@ class Stage1Round(Page):
     def is_displayed(self):
         if self.round_number > Constants.sub_rounds_stage_1:
             return False
-        elif self.round_number <= Constants.num_rounds/2:
+        elif self.round_number <= (Constants.num_rounds/2)+1:
             return True
     
     def js_vars(self):
@@ -171,6 +175,16 @@ class Stage1Round(Page):
         elif self.round_number >= 6 and self.round_number <= 10:
             player.answer_correct_phase2 += int(data)
             player.last_answer_correct_phase = player.answer_correct_phase2
+        
+        #Phase 3
+        elif self.round_number >= 11 and self.round_number <= 15:
+            player.answer_correct_phase3 += int(data)
+            player.last_answer_correct_phase = player.answer_correct_phase3
+        
+        #Phase 4
+        elif self.round_number >= 16 and self.round_number <= 20:
+            player.answer_correct_phase4 += int(data)
+            player.last_answer_correct_phase = player.answer_correct_phase4
 
 #=======================================================================================================================
 class Stage1ResultPhase(Page):
@@ -187,8 +201,7 @@ class Stage1ResultPhase(Page):
         token_value_phase = player.last_token_value_phase
         answer_correct_phase = player.last_answer_correct_phase 
         payment_phase =  token_value_phase * answer_correct_phase
-        player.payment_total += payment_phase
-        payment_total = player.payment_total
+        payment_stage_1 = 0
         phase_label = 0
         
         #Phase 1
@@ -200,19 +213,54 @@ class Stage1ResultPhase(Page):
         if self.round_number == 10:
             player.payment_phase_2 = payment_phase
             phase_label = 2
-     
+        
+        #Phase 3
+        if self.round_number == 15:
+            player.payment_phase_3 = payment_phase
+            phase_label = 3
+        
+        #Phase 4
+        if self.round_number == 20:
+            player.payment_phase_4 = payment_phase
+            phase_label = 4
+
+        payment_stage_1 = player.payment_phase_1 + player.payment_phase_2 + player.payment_phase_3 + player.payment_phase_4
+        player.payment_stage_1 = payment_stage_1
+
         return {
             'token_value_phase': token_value_phase,
             'answer_correct_phase': answer_correct_phase,
             'payment_phase': payment_phase,
-            'phase_label': phase_label, 
-            'payment_total': payment_total
+            'phase_label': phase_label,
+            'payment_stage_1': payment_stage_1
         }
+#=======================================================================================================================
+class Stage1AllResult(Page):
+
+    def is_displayed(self):
+        return self.round_number == (Constants.num_rounds/2)
+
+    def vars_for_template(self):
+        player = self.player.in_round(1)
+        payment_phase_1 = player.payment_phase_1
+        payment_phase_2 = player.payment_phase_2
+        payment_phase_3 = player.payment_phase_3
+        payment_phase_4 = player.payment_phase_4
+        payment_stage_1 = player.payment_stage_1
+
+        return{
+            'payment_phase_1': payment_phase_1,
+            'payment_phase_2': payment_phase_2,
+            'payment_phase_3': payment_phase_3,
+            'payment_phase_4': payment_phase_4,
+            'payment_stage_1': payment_stage_1
+        } 
+        
+
 
 # ******************************************************************************************************************** #
 # *** MANAGEMENT PAGES
 # ******************************************************************************************************************** #
-#stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions, Stage1Start, Stage1UrnZPreview, Stage1Urn]
-#stage_1_sequence = [Stage1Start, Stage1UrnZPreview, Stage1Urn]
-stage_1_sequence = [Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase]
+stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions, Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
+#stage_1_sequence = [Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
 page_sequence = stage_1_sequence
