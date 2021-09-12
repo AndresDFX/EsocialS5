@@ -16,15 +16,40 @@
     {{ super() }}
 
     <img id="image" src=""/>
-    {%formfield player.field_answer %}
+    {%formfield player.num_entered %}
+    {% next_button %}
    
 {% endblock %}
 {% block scripts %}
-    
+
     <script>
         var path_image = js_vars.path_image;
         var num_errors = js_vars.num_errors;
+        var rate_error = js_vars.rate_error;
         $('#image').attr('src', "/static/images/1stage/"+path_image+".png");
-        console.log(num_errors); 
+    </script>
+
+    <script>
+        //Metodo para validar el numero ingresado si la respuesta es correcta 1, en caso contrario 0
+        function validateRange(num_entered){
+            min_value = num - rate_error;
+            max_value = num + rate_error;
+            correct_answer = 0;
+
+            if(num_entered >= min_value || num_entered <= max_value){
+                correct_answer = 1;
+            }
+            liveSend(correct_answer);
+        }
+    </script>
+
+    <script>
+        
+        $("#form").on('submit', function(e){
+            console.log("Paro");
+            let num_entered = $("#id_num_entered").val();
+            validateRange(num_entered);        
+        });
+         
     </script>
 {% endblock %}

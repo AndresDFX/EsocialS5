@@ -159,21 +159,48 @@ class Stage1Urn(Page):
 class Stage1Round(Page):
 
     form_model = 'player'
-    form_fields = ['field_answer']
+    form_fields = ['num_entered']
+
+    def is_displayed(self):
+        return self.round_number == 1
     
     def js_vars(self):
         round_index = self.round_number - 1 
-        path_image = Constants.images_path[round_index]
+        rate_error = Constants.rate_error
+        path_image = Constants.images_names_questions[round_index]
         num_errors = path_image.split(sep='_')[1]
+        
         return dict(
+            rate_error=rate_error,
             path_image=path_image,
             num_errors=num_errors
         )
+    
+    def live_method(self, data):
+        if self.round_number >= 1 and self.round_number <= 5:
+            self.answer_correct_phase1 += data
+           
+        elif self.round_number >= 6 and self.round_number <= 11:
+            self.answer_correct_phase2 += data
+
+    def vars_of_template(self):
+        return{
+            'round_number': self.round_number
+        }
+
+
+class Stage1Result(Page):
+
+    def vars_of_template(self):
+        return{
+            'round_number': self.round_number
+        }
+
 
 # ******************************************************************************************************************** #
 # *** MANAGEMENT PAGES
 # ******************************************************************************************************************** #
 #stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions, Stage1Start, Stage1UrnZPreview, Stage1Urn]
 #stage_1_sequence = [Stage1Start, Stage1UrnZPreview, Stage1Urn]
-stage_1_sequence = [Stage1Round]
+stage_1_sequence = [Stage1Round, Stage1Result]
 page_sequence = stage_1_sequence

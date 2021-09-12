@@ -102,9 +102,10 @@ class Constants(BaseConstants):
     #STAGE 1
     urn_z_token_min_random = 2
     urn_z_token_max_random = 8
-    urn_y_token_min_random = 2
-    urn_y_token_max_random = 8
-    images_path = [
+    urn_y_token_min_random = 0
+    urn_y_token_max_random = 10
+    rate_error = 2
+    images_names_questions = [
         "1_20"
     ]
 
@@ -124,6 +125,8 @@ class Player(BasePlayer):
 # ******************************************************************************************************************** #
 # *** STAGE 1
 # ******************************************************************************************************************** #
+    last_decision_phase = makefield_urn_decision()
+    last_token_value_phase = makefield_integer()
     payment_phase_1 = makefield_integer()
     payment_phase_2 = makefield_integer()
     payment_phase_3 = makefield_integer()
@@ -133,14 +136,15 @@ class Player(BasePlayer):
     decision_phase_2 = makefield_urn_decision()
     decision_phase_3 = makefield_urn_decision()
     decision_phase_4 = makefield_urn_decision()
-    last_decision_phase = makefield_urn_decision()
-    token_value_phase_1 = makefield_integer()
-    token_value_phase_2 = makefield_integer()
-    token_value_phase_3 = makefield_integer()
-    token_value_phase_4 = makefield_integer()
-    last_token_value_phase = makefield_integer()
-
+    answer_correct_phase1 = makefield_integer()
+    answer_correct_phase2 = makefield_integer()
+    answer_correct_phase3 = makefield_integer()
+    answer_correct_phase4 = makefield_integer()
     answer_correct_stage1 = makefield_integer()
+    num_entered = models.IntegerField(
+        initial=0, 
+        label="Por favor indique el número de inconsistencias que logró identificar dentro del texto:" 
+    )
 
     ############################### Consent #########################
     accepts_terms = models.BooleanField()
@@ -170,13 +174,6 @@ class Player(BasePlayer):
     question_1_phase1_urnz = makefield_urnz_question1()
     question_2_phase1_urnz = makefield_urnz_question2()
     question_3_phase1_urnz = makefield_urnz_question3()
-    field_answer = models.IntegerField(initial=0, label="Por favor indique el número de inconsistencias que logró identificar dentro del texto:" )
-    #round1_image = models.IntegerField(
-    #    choices= [
-     #       [1,'images/1stage/urn_decision.png'], 
-    #    ]
-    #)       
-    
     
     ############################ PHASE 2 ############################
     question_1_phase2_urnz = makefield_urnz_question1()
