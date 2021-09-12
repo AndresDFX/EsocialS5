@@ -27,8 +27,7 @@ def make_radio_button(label, choices, fieldtype):
 
 def makefield_urn_decision():
     return models.StringField(
-        choices=choices_urn
-    )
+    initial='')
 
 def makefield_string(label, choices):
     return models.StringField(
@@ -104,12 +103,31 @@ class Constants(BaseConstants):
     urn_z_token_max_random = 8
     urn_y_token_min_random = 0
     urn_y_token_max_random = 10
+    sub_rounds_stage_1 = 16
     rate_error = 2
+    num_seconds_stage_1 = 10
     images_names_questions = [
-        "1_20"
+        "1_5",
+        "2_10",
+        "3_15",
+        "4_20",
+        "5_25",
+        "6_5",
+        "7_10",
+        "8_15",
+        "9_20",
+        "10_25",
+        "11_5",
+        "12_10",
+        "13_15",
+        "14_20",
+        "15_25",
+        "16_5",
+        "17_10",
+        "18_15",
+        "19_20",
+        "20_25"
     ]
-
-
 
 class Subsession(BaseSubsession):
     pass
@@ -127,6 +145,7 @@ class Player(BasePlayer):
 # ******************************************************************************************************************** #
     last_decision_phase = makefield_urn_decision()
     last_token_value_phase = makefield_integer()
+    last_answer_correct_phase = makefield_integer()
     payment_phase_1 = makefield_integer()
     payment_phase_2 = makefield_integer()
     payment_phase_3 = makefield_integer()

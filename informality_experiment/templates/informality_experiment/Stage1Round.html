@@ -5,7 +5,7 @@
 {# ****************************************************************************************************************** #}
 
 {% block title %}
-    Test
+    Ronda {{player.round_number}} 
 {% endblock %}
 
 {# ****************************************************************************************************************** #}
@@ -16,7 +16,7 @@
     {{ super() }}
 
     <img id="image" src=""/>
-    {%formfield player.num_entered %}
+    {% formfield player.num_entered %}
     {% next_button %}
    
 {% endblock %}
@@ -24,19 +24,19 @@
 
     <script>
         var path_image = js_vars.path_image;
-        var num_errors = js_vars.num_errors;
-        var rate_error = js_vars.rate_error;
+        var num_errors = parseInt(js_vars.num_errors);
+        var rate_error = parseInt(js_vars.rate_error);
         $('#image').attr('src', "/static/images/1stage/"+path_image+".png");
     </script>
 
     <script>
         //Metodo para validar el numero ingresado si la respuesta es correcta 1, en caso contrario 0
-        function validateRange(num_entered){
-            min_value = num - rate_error;
-            max_value = num + rate_error;
+        function validateRange(num){
+            min_value = num_errors - rate_error;
+            max_value = num_errors + rate_error;
             correct_answer = 0;
 
-            if(num_entered >= min_value || num_entered <= max_value){
+            if(num >= min_value && num <= max_value){
                 correct_answer = 1;
             }
             liveSend(correct_answer);
@@ -44,12 +44,13 @@
     </script>
 
     <script>
-        
-        $("#form").on('submit', function(e){
-            console.log("Paro");
-            let num_entered = $("#id_num_entered").val();
-            validateRange(num_entered);        
-        });
-         
+        //$(document).ready( function() { 
+            $("#form").on('submit', function(e){
+                e.preventDefault(); 
+                let num_entered = $("#id_num_entered").val();
+                validateRange(num_entered);   
+                this.submit();
+            });
+        //})
     </script>
 {% endblock %}
