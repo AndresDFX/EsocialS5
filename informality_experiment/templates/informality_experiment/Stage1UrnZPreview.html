@@ -21,3 +21,16 @@
     {% next_button %}
         
 {% endblock %}
+
+{# ****************************************************************************************************************** #}
+{# *** SCRIPTS *** #}
+{# ****************************************************************************************************************** #}
+
+{% block scripts %}
+    <script>
+        let min_length = js_vars.min_length;
+        let max_length = js_vars.max_length;
+        $('textarea').attr('minlength', min_length);
+        $('textarea').attr('maxlength', max_length);
+    </script>
+{% endblock %}

@@ -44,7 +44,7 @@
         </div>
     </div>
 
-    <!--Boton de siguiente-->
+    <!--Boton de siguiente (oculto) -->
     <p>
         <button class="otree-btn-next btn btn-primary" style="display:none;"> Siguiente</button>
     </p>
@@ -58,7 +58,7 @@
 {% block scripts %}
     <script>
 
-        //Toma el evento clic de las imagenes obtiene y envia el valor del 'id'
+        //Toma el evento clic de las imagenes obtiene y envia el valor del 'id' y da clic al boton de siguiente que esta oculto
         $(".urn").on("click", function(event) {
             event.preventDefault();
             liveSend($(this).attr('id'));

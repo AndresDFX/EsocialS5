@@ -1,0 +1,30 @@
+{% extends "informality_experiment/base/global.html" %}
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+
+{% block title %}
+    Test
+{% endblock %}
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+
+{% block content %}
+    {{ super() }}
+
+    <img id="image" src=""/>
+    {%formfield player.field_answer %}
+   
+{% endblock %}
+{% block scripts %}
+    
+    <script>
+        var path_image = js_vars.path_image;
+        var num_errors = js_vars.num_errors;
+        $('#image').attr('src', "/static/images/1stage/"+path_image+".png");
+        console.log(num_errors); 
+    </script>
+{% endblock %}

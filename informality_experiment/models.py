@@ -99,6 +99,17 @@ class Constants(BaseConstants):
     players_per_group = None
     num_rounds = 100
 
+    #STAGE 1
+    urn_z_token_min_random = 2
+    urn_z_token_max_random = 8
+    urn_y_token_min_random = 2
+    urn_y_token_max_random = 8
+    images_path = [
+        "1_20"
+    ]
+
+
+
 class Subsession(BaseSubsession):
     pass
 
@@ -122,10 +133,13 @@ class Player(BasePlayer):
     decision_phase_2 = makefield_urn_decision()
     decision_phase_3 = makefield_urn_decision()
     decision_phase_4 = makefield_urn_decision()
+    last_decision_phase = makefield_urn_decision()
     token_value_phase_1 = makefield_integer()
     token_value_phase_2 = makefield_integer()
     token_value_phase_3 = makefield_integer()
     token_value_phase_4 = makefield_integer()
+    last_token_value_phase = makefield_integer()
+
     answer_correct_stage1 = makefield_integer()
 
     ############################### Consent #########################
@@ -156,6 +170,13 @@ class Player(BasePlayer):
     question_1_phase1_urnz = makefield_urnz_question1()
     question_2_phase1_urnz = makefield_urnz_question2()
     question_3_phase1_urnz = makefield_urnz_question3()
+    field_answer = models.IntegerField(initial=0, label="Por favor indique el número de inconsistencias que logró identificar dentro del texto:" )
+    #round1_image = models.IntegerField(
+    #    choices= [
+     #       [1,'images/1stage/urn_decision.png'], 
+    #    ]
+    #)       
+    
     
     ############################ PHASE 2 ############################
     question_1_phase2_urnz = makefield_urnz_question1()
