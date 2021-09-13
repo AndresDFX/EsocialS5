@@ -1,0 +1,25 @@
+{% extends "informality_experiment/base/global.html" %}
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    Preguntas de Control Etapa 2
+{% endblock %}
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+
+{% block content %}
+    {{ super() }}
+        
+    <b>Preguntas de comprensión:</b><br>
+    Antes de que tomes tu decisión queremos verificar si comprendiste la dinámica de esta actividad. 
+    Te haremos unas preguntas que no tienen ningún efecto en tus pagos.
+    
+    {% formfields %}
+    {% next_button %}
+    
+{% endblock %}
+
