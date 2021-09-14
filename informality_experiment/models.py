@@ -122,7 +122,8 @@ choices_gen_instructions5 = [
 class Constants(BaseConstants):
     name_in_url = 'informality_experiment'
     players_per_group = None
-    num_rounds = 100
+    num_rounds = 2
+    num_round = 1
 
     #STAGE 1
     urn_z_token_min_random = 2
@@ -130,13 +131,15 @@ class Constants(BaseConstants):
     urn_y_token_min_random = 0
     urn_y_token_max_random = 10
     sub_rounds_stage_1 = 20
+    sub_round_for_round_stage_1 = 5
     rate_error = 2
-    num_seconds_stage_1 = 5
+    num_seconds_stage_1 = 15
     images_names_questions = [
-        "1_5",
-        "1_6",
-        "1_6",
-        "1_8",
+        "1_1_1_4",
+        "1_1_2_5",
+        "1_1_3_6",
+        "1_1_4_2",
+        "1_1_5_4",
         "3_15",
         "4_20",
         "5_25",
@@ -165,10 +168,12 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
 
+    round_counter = models.IntegerField(initial=1)
     payment_total = makefield_integer()
 # ******************************************************************************************************************** #
 # *** STAGE 1
 # ******************************************************************************************************************** #
+    last_phase = makefield_integer()
     last_decision_phase = makefield_urn_decision()
     last_token_value_phase = makefield_integer()
     last_answer_correct_phase = makefield_integer()
