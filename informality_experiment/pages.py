@@ -12,19 +12,22 @@ class Consent(Page):
     form_fields = ['accepts_terms']
 
     def is_displayed(self):
-        return self.round_number == 1
+        if(self.round_number == 1 and self.player.round_counter == 0):
+            return self.round_number == self.round_number
 
 #=======================================================================================================================
 class GenInstructions(Page):
     
     def is_displayed(self):
-        return self.round_number == 1
+        if(self.round_number == 1 and self.player.round_counter == 0):
+            return self.round_number == self.round_number
 
 #=======================================================================================================================
 class Stage1Instructions(Page):
 
     def is_displayed(self):
-        return self.round_number == 1
+        if(self.round_number == 1 and self.player.round_counter == 0):
+            return self.round_number == self.round_number
     
 #=======================================================================================================================
 class Stage1Questions(Page):
@@ -36,8 +39,10 @@ class Stage1Questions(Page):
         'question_4_stage1_instructions'
     ]
 
+    
     def is_displayed(self):
-        return self.round_number == 1
+        if(self.round_number == 1 and self.player.round_counter == 0):
+            return self.round_number == self.round_number
 
     def error_message(self, values):
         solutions = dict(
@@ -59,9 +64,13 @@ class Stage1Questions(Page):
 class Stage1Start(Page):
 
     def is_displayed(self):
-        if (self.round_number == 1 or self.round_number == 6 or 
-            self.round_number == 11 or self.round_number == 16):
+        player = self.player.in_round(1)
+        if (player.round_counter % Constants.images_per_phase == 0 
+            or self.round_number == 1):
             return self.round_number == self.round_number
+        else:
+            return False
+
 
     def live_method(self, data):
         
@@ -84,36 +93,43 @@ class Stage1UrnZPreview(Page):
     form_model = 'player'
 
     def is_displayed(self):
-        if (self.round_number == 1 or self.round_number == 6 or 
-            self.round_number == 11 or self.round_number == 16):
-            player = self.player.in_round(1)
+        player = self.player.in_round(1)
+        # ToDo: Copy forms fields  6-11-16 rounds in player round 1
+        if (player.round_counter % Constants.images_per_phase == 0 
+            or self.round_number == 1):
             if player.last_decision_phase  == 'Z':
                 return self.round_number == self.round_number
+        else:
+            return False
+
 
     def get_form_fields(self):
-        if self.player.round_number == 1:
+        if self.round_number == 1:
             return ['question_1_phase1_urnz', 'question_2_phase1_urnz', 'question_3_phase1_urnz']
-        elif self.player.round_number == 6:
+        elif self.round_number == 6:
             return ['question_1_phase2_urnz', 'question_2_phase2_urnz', 'question_3_phase2_urnz']
-        elif self.player.round_number == 11:
+        elif self.round_number == 11:
             return ['question_1_phase3_urnz', 'question_2_phase3_urnz', 'question_3_phase3_urnz']
-        elif self.player.round_number == 16:
+        elif self.round_number == 16:
             return ['question_1_phase4_urnz', 'question_2_phase4_urnz', 'question_3_phase4_urnz']
 
     def js_vars(self):
         return dict(
             #Tamaño de textarea
-            min_length=1,
-            max_length=2
+            min_length=Constants.min_length_textarea,
+            max_length=Constants.max_length_textarea
         )
     
 #=======================================================================================================================
 class Stage1Urn(Page):
-    
+
     def is_displayed(self):
-        if (self.round_number == 1 or self.round_number == 6 or 
-            self.round_number == 11 or self.round_number == 16):
-                return self.round_number == self.round_number
+        player = self.player.in_round(1)
+        if (player.round_counter % Constants.images_per_phase == 0 
+            or self.round_number == 1):
+            return self.round_number == self.round_number
+        else:
+            return False
 
     def vars_for_template(self):
         
@@ -129,7 +145,8 @@ class Stage1Urn(Page):
 
         return{
             'num_random': num_random,
-            'urn_decision_label': urn_decision_label
+            'urn_decision_label': urn_decision_label,
+            'round_counter':player.round_counter
         }
 
 #=======================================================================================================================
@@ -140,47 +157,86 @@ class Stage1Round(Page):
     timer_text = 'Tiempo restante para completar la Ronda: '
     timeout_seconds = Constants.num_seconds_stage_1
 
- 
-    def is_displayed(self):
-        if self.round_number > Constants.sub_rounds_stage_1:
-            return False
-        elif self.round_number <= (Constants.num_rounds/2)+1:
-            return True
     
+    def before_next_page(self):
+        player = self.player.in_round(1)
+        if (player.round_counter % Constants.images_per_phase  != 0):
+            player.round_counter = math.ceil(player.round_counter/5)*5
+    
+
+    def is_displayed(self):
+        player = self.player.in_round(1)
+        if (player.round_counter <= Constants.images_max_phase4):
+                return self.round_number == self.round_number
+        else:
+            False
+
     def js_vars(self):
-        round_index = self.round_number - 1 
+        player = self.player.in_round(1)
+
+        if (player.round_counter % Constants.images_per_phase != 0):
+            player.round_counter = math.ceil(player.round_counter/5)*5
+        
+        round_counter = player.round_counter
         rate_error = Constants.rate_error
-        path_image = Constants.images_names_questions[round_index]
-        num_errors = path_image.split(sep='_')[1]
+        path_image = Constants.images_names_questions[round_counter]
+        num_errors = path_image.split(sep='_')[3]
         
         return dict(
             rate_error=rate_error,
             path_image=path_image,
-            num_errors=num_errors
+            num_errors=num_errors,
+            round_counter=round_counter
         )
-    
+
     def live_method(self, data):
         player = self.in_round(1)
-        
+        player.round_counter = player.round_counter + 1
+        round_counter = player.round_counter
+        correct_answer = int(data)
+        path_image = Constants.images_names_questions[round_counter]
+        values_image = path_image.split(sep='_')
+        num_errors = values_image[3]
+        round_label = values_image[1]
+
         #Phase 1
-        if self.round_number >= 1 and self.round_number <= 5:
-            player.answer_correct_phase1 += int(data)
+        if (round_counter >=0 and round_counter <= Constants.images_max_phase1):
+            player.answer_correct_phase1 += correct_answer
             player.last_answer_correct_phase = player.answer_correct_phase1
+            print("round_counter", player.round_counter)
+            print("phase 1")
             
         #Phase 2
-        elif self.round_number >= 6 and self.round_number <= 10:
-            player.answer_correct_phase2 += int(data)
+        if (round_counter > Constants.images_max_phase1 and round_counter <= Constants.images_max_phase2):
+            player.answer_correct_phase2 += correct_answer
             player.last_answer_correct_phase = player.answer_correct_phase2
+            print("round_counter", player.round_counter)
+            print("phase 2")
         
         #Phase 3
-        elif self.round_number >= 11 and self.round_number <= 15:
-            player.answer_correct_phase3 += int(data)
+        elif (round_counter >Constants.images_max_phase2 and round_counter <= Constants.images_max_phase3):
+            player.answer_correct_phase3 += correct_answer
             player.last_answer_correct_phase = player.answer_correct_phase3
+            print("round_counter", player.round_counter)
+            print("phase 3")
         
         #Phase 4
-        elif self.round_number >= 16 and self.round_number <= 20:
-            player.answer_correct_phase4 += int(data)
+        elif (round_counter > Constants.images_max_phase3 and round_counter <= Constants.images_max_phase4):
+            player.answer_correct_phase4 += correct_answer
             player.last_answer_correct_phase = player.answer_correct_phase4
+            print("round_counter", player.round_counter)
+            print("phase 4")
+        
+        response = dict(
+            path_image=path_image,
+            num_errors=num_errors,
+            round_counter=round_counter,
+            round_label=round_label
+        )
+        return {
+            player.id_in_group: response
+        }
+
 
 #=======================================================================================================================
 class Stage1ResultPhase(Page):
@@ -188,53 +244,50 @@ class Stage1ResultPhase(Page):
     form_model = 'player'
 
     def is_displayed(self):
-        if (self.round_number == 5 or self.round_number == 10 or 
-            self.round_number == 15 or self.round_number == 20):
-                return True
-
+        player = self.player.in_round(1)
+        if (player.round_counter % Constants.images_per_phase == 0):
+            return self.round_number == self.round_number
+            
     def vars_for_template(self):
         player = self.player.in_round(1)
         token_value_phase = player.last_token_value_phase
         answer_correct_phase = player.last_answer_correct_phase 
-        payment_phase =  token_value_phase * answer_correct_phase
-        payment_stage_1 = 0
-        phase_label = 0
-        
+        payment_phase =  Constants.coin_value * token_value_phase * answer_correct_phase 
+        phase_label = player.round_counter // Constants.images_per_phase 
+
         #Phase 1
-        if self.round_number == 5:
+        if phase_label == 1:
             player.payment_phase_1 = payment_phase
-            phase_label = 1
 
         #Phase 2
-        if self.round_number == 10:
+        if phase_label == 2:
             player.payment_phase_2 = payment_phase
-            phase_label = 2
         
         #Phase 3
-        if self.round_number == 15:
+        if phase_label == 3:
             player.payment_phase_3 = payment_phase
-            phase_label = 3
         
         #Phase 4
-        if self.round_number == 20:
+        if phase_label == 4:
             player.payment_phase_4 = payment_phase
-            phase_label = 4
-
-        payment_stage_1 = player.payment_phase_1 + player.payment_phase_2 + player.payment_phase_3 + player.payment_phase_4
-        player.payment_stage_1 = payment_stage_1
 
         return {
+            'round_counter':player.round_counter,
             'token_value_phase': token_value_phase,
             'answer_correct_phase': answer_correct_phase,
             'payment_phase': payment_phase,
             'phase_label': phase_label,
-            'payment_stage_1': payment_stage_1
+            'payment_phase': payment_phase
         }
+
 #=======================================================================================================================
 class Stage1AllResult(Page):
 
     def is_displayed(self):
-        return self.round_number == self.round_number
+        player = self.player.in_round(1)
+        if (player.round_counter == Constants.images_max_phase4):
+            return self.round_number == self.round_number
+
 
     def vars_for_template(self):
         player = self.player.in_round(1)
@@ -242,7 +295,8 @@ class Stage1AllResult(Page):
         payment_phase_2 = player.payment_phase_2
         payment_phase_3 = player.payment_phase_3
         payment_phase_4 = player.payment_phase_4
-        payment_stage_1 = player.payment_stage_1
+        payment_stage_1 = payment_phase_1 + payment_phase_2 + payment_phase_3 + payment_phase_4
+        player.payment_stage_1 = payment_stage_1
 
         return{
             'payment_phase_1': payment_phase_1,
@@ -258,7 +312,8 @@ class Stage1AllResult(Page):
 class Stage2Start(Page):
 
     def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+        if (self.round_number == Constants.num_rounds):
+            return self.round_number == self.round_number
 
 #=======================================================================================================================
 class Stage2Questions(Page):
@@ -270,7 +325,8 @@ class Stage2Questions(Page):
     ]
 
     def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+        if (self.round_number == Constants.num_rounds):
+            return self.round_number == self.round_number
 
     def error_message(self, values):
         solutions = dict(
@@ -292,14 +348,16 @@ class Stage2DoubleMoney(Page):
     form_fields = ['amount_inversion']
 
     def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+        if (self.round_number == Constants.num_rounds):
+            return self.round_number == self.round_number
 
 #=======================================================================================================================
 class Stage2HeadTails(Page):
     form_model = 'player'
 
     def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+        if (self.round_number == Constants.num_rounds):
+            return self.round_number == self.round_number
     
     def live_method(self, data):
         self.flip_value = float(data)
@@ -314,12 +372,12 @@ class Stage2HeadTails(Page):
 class Stage2ResultCoin(Page):
 
     def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+        if (self.round_number == Constants.num_rounds):
+            return self.round_number == self.round_number
 
     def vars_for_template(self):
-
-        flip_value = self.player.flip_value 
         player = self.player.in_round(1)
+        flip_value = self.player.flip_value 
         amount_inversion = math.trunc(c(self.player.amount_inversion))
         cara_sello_name = ""
         payment_stage_2 = 0
@@ -343,7 +401,8 @@ class Stage2ResultCoin(Page):
 class ResultAllStages(Page):
 
     def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+        if (self.round_number == Constants.num_rounds):
+            return self.round_number == self.round_number 
 
     def vars_for_template(self):
         player = self.player.in_round(1)
@@ -379,8 +438,6 @@ class SocioDemSurvey(Page):
     'no_cuenta_bancaria_apropiado', 'pedir_prestado_apropiado', 'transporte_alternativo_apropiado', 'vender_informal_apropiado', 'no_votar_apropiado', 'comprar_sin_factura_apropiado'
     ]
 
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
 
 # ******************************************************************************************************************** #
 # *** MANAGEMENT PAGES
@@ -388,5 +445,5 @@ class SocioDemSurvey(Page):
 stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions, Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
 #stage_1_sequence = [Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
 stage_2_sequence = [Stage2Start, Stage2Questions, Stage2DoubleMoney, Stage2HeadTails, Stage2ResultCoin]
-stage_final = [ResultAllStages, SocioDemSurvey]
-page_sequence = stage_2_sequence + stage_final
+stage_final = [ResultAllStages]
+page_sequence = stage_1_sequence + stage_2_sequence + stage_final

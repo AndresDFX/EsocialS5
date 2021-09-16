@@ -15,10 +15,10 @@
 {% block content %}
     {{ super() }}
 
-    <img id="image" src=""/>
+    <p align="left"><img id="image" src="" style= "width: 100%; object-fit: cover"/></p>
     {% formfield player.num_entered %}
     {% next_button %}
-   
+
 {% endblock %}
 {% block scripts %}
 
@@ -26,31 +26,58 @@
         var path_image = js_vars.path_image;
         var num_errors = parseInt(js_vars.num_errors);
         var rate_error = parseInt(js_vars.rate_error);
-        $('#image').attr('src', "/static/images/1stage/"+path_image+".png");
+        $('#image').attr('src', "/static/images/1stage/phases/"+path_image+".png");
+        $(".otree-btn-next").attr('onClick','myFunction()')
+        $(".otree-btn-next").attr('type','button')
     </script>
 
     <script>
         //Metodo para validar el numero ingresado si la respuesta es correcta 1, en caso contrario 0
-        function validateRange(num){
-            min_value = num_errors - rate_error;
-            max_value = num_errors + rate_error;
+        function validateRange(num, num_error, rate_err){
+            min_value = num_error - rate_err;
+            max_value = num_error + rate_err;
             correct_answer = 0;
 
             if(num >= min_value && num <= max_value){
                 correct_answer = 1;
             }
-            liveSend(correct_answer);
+            return correct_answer;
         }
     </script>
 
     <script>
         //$(document).ready( function() { 
-            $("#form").on('submit', function(e){
-                e.preventDefault(); 
-                let num_entered = $("#id_num_entered").val();
-                validateRange(num_entered);   
-                this.submit();
-            });
+        //    $("#form").on('submit', function(e){
+        //        e.preventDefault(); 
+        //        let num_entered = $("#id_num_entered").val();
+        //        validateRange(num_entered);   
+        //        this.submit();
+        //    });
         //})
+
+        $(document).ready( function() { 
+            console.log("Se cargo");
+        });
+    
+
+        function myFunction(){
+            let num_entered = $("#id_num_entered").val();
+            let correct_answer = validateRange(num_entered, num_errors, rate_error);  
+            console.log("Correct answer", correct_answer);
+            liveSend(correct_answer);
+        }
+
+        function liveRecv(data) {
+            let path_image = data.path_image;
+            num_errors = parseInt(data.num_errors);
+            round_counter = parseInt(data.round_counter);
+            if(round_counter > 0 && round_counter % 5 == 0){
+                $(".otree-btn-next").removeAttr('onClick');
+                $(".otree-btn-next").removeAttr('type');
+                $(".otree-btn-next").click();
+            }else{
+                $('#image').attr('src', "/static/images/1stage/phases/"+path_image+".png");
+            }
+        }
     </script>
 {% endblock %}
