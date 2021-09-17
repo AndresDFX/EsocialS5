@@ -3,6 +3,25 @@ from ._builtin import Page, WaitPage
 from .models import *
 import random, math
 
+# ******************************************************************************************************************** #
+# *** UTILS
+# ******************************************************************************************************************** #
+
+def get_data(player, list_atrr):
+    values = []
+    for attr in list_atrr:
+        values.append(getattr(player, attr))
+    return values
+
+def set_data(player, list_atrr, values):
+    for i,atrr in enumerate(list_atrr):
+        setattr(player, atrr, values[i])
+
+#TODO: Not work if method get_forms_fields is present in Class Page.
+def get_and_set_data(self_player, player, list_atrr):
+    values = get_data(self_player, list_atrr)
+    set_data(player, list_atrr, values)
+
 
 # ******************************************************************************************************************** #
 # *** STAGE 1
@@ -10,6 +29,7 @@ import random, math
 class Consent(Page):
     form_model = 'player'
     form_fields = ['accepts_terms']
+    
 
     def is_displayed(self):
         if(self.round_number == 1 and self.player.round_counter == 0):
@@ -38,7 +58,6 @@ class Stage1Questions(Page):
         'question_3_stage1_instructions',
         'question_4_stage1_instructions'
     ]
-
     
     def is_displayed(self):
         if(self.round_number == 1 and self.player.round_counter == 0):
@@ -94,14 +113,12 @@ class Stage1UrnZPreview(Page):
 
     def is_displayed(self):
         player = self.player.in_round(1)
-        # ToDo: Copy forms fields  6-11-16 rounds in player round 1
         if (player.round_counter % Constants.images_per_phase == 0 
             or self.round_number == 1):
             if player.last_decision_phase  == 'Z':
                 return self.round_number == self.round_number
         else:
             return False
-
 
     def get_form_fields(self):
         if self.round_number == 1:
@@ -113,9 +130,14 @@ class Stage1UrnZPreview(Page):
         elif self.round_number == 16:
             return ['question_1_phase4_urnz', 'question_2_phase4_urnz', 'question_3_phase4_urnz']
 
+    def before_next_page(self):
+        player = self.player.in_round(1)
+        list_atrr = self.form_fields
+        get_and_set_data(self.player, player, list_atrr)
+
     def js_vars(self):
         return dict(
-            #Tamaño de textarea
+            #Tamaño de TextArea
             min_length=Constants.min_length_textarea,
             max_length=Constants.max_length_textarea
         )
@@ -327,6 +349,11 @@ class Stage2Questions(Page):
     def is_displayed(self):
         if (self.round_number == Constants.num_rounds):
             return self.round_number == self.round_number
+    
+    def before_next_page(self):
+        player = self.player.in_round(1)
+        list_atrr = self.form_fields
+        get_and_set_data(self.player, player, list_atrr)
 
     def error_message(self, values):
         solutions = dict(
@@ -347,6 +374,11 @@ class Stage2DoubleMoney(Page):
     form_model = 'player'
     form_fields = ['amount_inversion']
 
+    def before_next_page(self):
+        player = self.player.in_round(1)
+        list_atrr = self.form_fields
+        get_and_set_data(self.player, player, list_atrr)
+
     def is_displayed(self):
         if (self.round_number == Constants.num_rounds):
             return self.round_number == self.round_number
@@ -360,6 +392,8 @@ class Stage2HeadTails(Page):
             return self.round_number == self.round_number
     
     def live_method(self, data):
+        player = self.in_round(1)
+        player.flip_value = float(data)
         self.flip_value = float(data)
 
     def vars_for_template(self):
@@ -425,25 +459,92 @@ class ResultAllStages(Page):
 #=======================================================================================================================
 class SocioDemSurvey(Page):
     form_model = 'player'
-    form_fields = ['genero', 'edad', 'ciudad', 'estrato', 'estado_civil', 'numero_hijos', 'identifica_cultura',
-    'identifica_religion','nivel_estudios', 'tendencia_politica', 'disposicion_riesgos', 'conseguir_esfuerzo',
-    'planes_termino', 'juego_suerte', 'propongo_aprender', 'mayores_logros', 'establecer_metas', 'competencia_excelencia',
-    'salir_adelante', 'comparar_calificaciones', 'empeno_trabajo', 'alcanzar_objetivos', 'cumplir_tareas', 'obtener_resultados',
-    'exito_esfuerzo','superar_desafios', 'confianza_tareas', 'tareas_excelencia', 'tareas_dificiles', 'alcanzar_objetivos',
-    'tarde_cita', 'comprar_vendedores_ambulantes', 'trabajar_sin_contrato', 'emplear_sin_contrato', 'no_cotizar_pension', 'no_cotizar_salud',
-    'no_cuenta_bancaria', 'pedir_prestado', 'transporte_alternativo', 'vender_informal', 'no_votar', 'comprar_sin_factura',
-    'tarde_cita_otros', 'comprar_vendedores_ambulantes_otros', 'trabajar_sin_contrato_otros', 'emplear_sin_contrato_otros', 'no_cotizar_pension_otros', 'no_cotizar_salud_otros',
-    'no_cuenta_bancaria_otros', 'pedir_prestado_otros', 'transporte_alternativo_otros', 'vender_informal_otros', 'no_votar_otros', 'comprar_sin_factura_otros',
-    'tarde_cita_apropiado', 'comprar_vendedores_ambulantes_apropiado', 'trabajar_sin_contrato_apropiado', 'emplear_sin_contrato_apropiado', 'no_cotizar_pension_apropiado', 'no_cotizar_salud_apropiado',
-    'no_cuenta_bancaria_apropiado', 'pedir_prestado_apropiado', 'transporte_alternativo_apropiado', 'vender_informal_apropiado', 'no_votar_apropiado', 'comprar_sin_factura_apropiado'
-    ]
+    form_fields = [
+        'edad',
+        'ciudad',
+        'rol_hogar',
+        'estado_civil',
+        'hijos',
+        'etnia',
+        'religion',
+        'estudios',
+        'actividad_actual',
+        'esta_laborando' ,
+        'ingreso_mensual' ,
+        'gasto_mensual' ,
+        'alimentos',
+        'aseo',
+        'electronicos',
+        'transporte',
+        'servicios',
+        'diversion',
+        'ahorro',
+        'deudas',
+        'offer_1',
+        'Estabilidad',
+        'Independencia',
+        'Descanso',
+        'Lucro',
+        'Protección',
+        'encuesta_tabla1_pregunta1',
+        'encuesta_tabla1_pregunta2',
+        'encuesta_tabla1_pregunta3',
+        'encuesta_tabla1_pregunta4',
+        'encuesta_tabla1_pregunta5',
+        'encuesta_tabla1_pregunta6',
+        'encuesta_tabla1_pregunta7',
+        'encuesta_tabla1_pregunta8',
+        'encuesta_tabla1_pregunta9',
+        'encuesta_tabla1_pregunta10',
+        'encuesta_tabla2_pregunta1',
+        'encuesta_tabla2_pregunta2',
+        'encuesta_tabla2_pregunta3',
+        'encuesta_tabla2_pregunta4',
+        'encuesta_tabla2_pregunta5',
+        'encuesta_tabla2_pregunta6',
+        'encuesta_tabla2_pregunta7',
+        'encuesta_tabla2_pregunta8',
+        'encuesta_tabla2_pregunta9',
+        'encuesta_tabla3_pregunta1',
+        'encuesta_tabla3_pregunta2',
+        'encuesta_tabla3_pregunta3',
+        'encuesta_tabla3_pregunta4',
+        'encuesta_tabla3_pregunta5',
+        'encuesta_tabla3_pregunta6',
+        'encuesta_tabla3_pregunta7',
+        'encuesta_tabla3_pregunta8',
+        'encuesta_tabla3_pregunta9',
+        'encuesta_tabla3_pregunta10',
+        'encuesta_tabla3_pregunta11',
+        'encuesta_tabla3_pregunta12',
+        'encuesta_tabla3_pregunta13',
+        'encuesta_tabla3_pregunta14',
+        'encuesta_tabla3_pregunta15',
+        'encuesta_tabla3_pregunta16',
+        'encuesta_tabla3_pregunta17',
+        'encuesta_tabla3_pregunta18',
+        'encuesta_tabla3_pregunta19',
+        'encuesta_tabla3_pregunta20',
+        'encuesta_tabla3_pregunta21',
+        'encuesta_tabla3_pregunta22',
+        'encuesta_tabla3_pregunta23',
+        'encuesta_tabla3_pregunta26',
+        ]
 
+    def before_next_page(self):
+        player = self.player.in_round(1)
+        list_atrr = self.form_fields
+        get_and_set_data(self.player, player, list_atrr)
+    
+    def is_displayed(self):
+        if (self.round_number == Constants.num_rounds):
+            return self.round_number == self.round_number 
 
 # ******************************************************************************************************************** #
 # *** MANAGEMENT PAGES
 # ******************************************************************************************************************** #
-#stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions, Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
-stage_1_sequence = [Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
+#stage_1_sequence = [Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
+stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions, Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
 stage_2_sequence = [Stage2Start, Stage2Questions, Stage2DoubleMoney, Stage2HeadTails, Stage2ResultCoin]
-stage_final = [ResultAllStages]
-page_sequence = stage_1_sequence + stage_2_sequence + stage_final
+final_pages = [ResultAllStages, SocioDemSurvey]
+page_sequence = stage_1_sequence + stage_2_sequence + final_pages

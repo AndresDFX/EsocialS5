@@ -21,15 +21,11 @@
 
 {% endblock %}
 {% block scripts %}
-
     <script>
         var path_image = js_vars.path_image;
         var num_errors = parseInt(js_vars.num_errors);
         var rate_error = parseInt(js_vars.rate_error);
 
-    </script>
-
-    <script>
         //Metodo para validar el numero ingresado si la respuesta es correcta 1, en caso contrario 0
         function validateRange(num, num_error, rate_err){
             min_value = num_error - rate_err;
@@ -41,28 +37,28 @@
             }
             return correct_answer;
         }
-    </script>
 
-    <script>
         $(document).ready( function() { 
             $('#image').attr('src', "/static/images/1stage/phases/"+path_image+".PNG");
-            $(".otree-btn-next").attr('onClick','myFunction()')
+            $(".otree-btn-next").attr('onclick','sendAnswer()')
             $(".otree-btn-next").attr('type','button')
         });
 
-        function myFunction(){
+        //Metodo que utiliza el metodo liveSend de Otree la informacion se recibe en live_method(self) del Page
+        function sendAnswer(){
             let num_entered = $("#id_num_entered").val();
             let correct_answer = validateRange(num_entered, num_errors, rate_error);  
             console.log("Correct answer", correct_answer);
             liveSend(correct_answer);
         }
 
+        //Metodo de Otree que recibe la respuesta del metodo live_method(self) del Page
         function liveRecv(data) {
             let path_image = data.path_image;
             num_errors = parseInt(data.num_errors);
             round_counter = parseInt(data.round_counter);
             if(round_counter > 0 && round_counter % 5 == 0){
-                $(".otree-btn-next").removeAttr('onClick');
+                $(".otree-btn-next").removeAttr('onclick');
                 $(".otree-btn-next").removeAttr('type');
                 $(".otree-btn-next").click();
             }else{
