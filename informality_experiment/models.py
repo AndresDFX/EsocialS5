@@ -127,8 +127,8 @@ class Constants(BaseConstants):
     #STAGE 1
     coin_value = 20
     rate_error = 2
-    min_length_textarea = 1
-    max_length_textarea = 2
+    min_length_textarea = 1 #50
+    max_length_textarea = 2 #200
     num_seconds_stage_1 = 5
     urn_z_token_min_random = 2
     urn_z_token_max_random = 8

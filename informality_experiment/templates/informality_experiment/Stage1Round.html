@@ -26,9 +26,7 @@
         var path_image = js_vars.path_image;
         var num_errors = parseInt(js_vars.num_errors);
         var rate_error = parseInt(js_vars.rate_error);
-        $('#image').attr('src', "/static/images/1stage/phases/"+path_image+".png");
-        $(".otree-btn-next").attr('onClick','myFunction()')
-        $(".otree-btn-next").attr('type','button')
+
     </script>
 
     <script>
@@ -46,19 +44,11 @@
     </script>
 
     <script>
-        //$(document).ready( function() { 
-        //    $("#form").on('submit', function(e){
-        //        e.preventDefault(); 
-        //        let num_entered = $("#id_num_entered").val();
-        //        validateRange(num_entered);   
-        //        this.submit();
-        //    });
-        //})
-
         $(document).ready( function() { 
-            console.log("Se cargo");
+            $('#image').attr('src', "/static/images/1stage/phases/"+path_image+".PNG");
+            $(".otree-btn-next").attr('onClick','myFunction()')
+            $(".otree-btn-next").attr('type','button')
         });
-    
 
         function myFunction(){
             let num_entered = $("#id_num_entered").val();
