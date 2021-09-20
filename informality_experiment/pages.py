@@ -225,29 +225,21 @@ class Stage1Round(Page):
         if (round_counter >=0 and round_counter <= Constants.images_max_phase1):
             player.answer_correct_phase1 += correct_answer
             player.last_answer_correct_phase = player.answer_correct_phase1
-            print("round_counter", player.round_counter)
-            print("phase 1")
             
         #Phase 2
         if (round_counter > Constants.images_max_phase1 and round_counter <= Constants.images_max_phase2):
             player.answer_correct_phase2 += correct_answer
             player.last_answer_correct_phase = player.answer_correct_phase2
-            print("round_counter", player.round_counter)
-            print("phase 2")
-        
+
         #Phase 3
         elif (round_counter >Constants.images_max_phase2 and round_counter <= Constants.images_max_phase3):
             player.answer_correct_phase3 += correct_answer
             player.last_answer_correct_phase = player.answer_correct_phase3
-            print("round_counter", player.round_counter)
-            print("phase 3")
         
         #Phase 4
         elif (round_counter > Constants.images_max_phase3 and round_counter <= Constants.images_max_phase4):
             player.answer_correct_phase4 += correct_answer
             player.last_answer_correct_phase = player.answer_correct_phase4
-            print("round_counter", player.round_counter)
-            print("phase 4")
         
         response = dict(
             path_image=path_image,
@@ -306,10 +298,7 @@ class Stage1ResultPhase(Page):
 class Stage1AllResult(Page):
 
     def is_displayed(self):
-        player = self.player.in_round(1)
-        if (player.round_counter == Constants.images_max_phase4):
-            return self.round_number == self.round_number
-
+        return self.round_number == Constants.num_rounds
 
     def vars_for_template(self):
         player = self.player.in_round(1)
@@ -334,8 +323,7 @@ class Stage1AllResult(Page):
 class Stage2Start(Page):
 
     def is_displayed(self):
-        if (self.round_number == Constants.num_rounds):
-            return self.round_number == self.round_number
+        return self.round_number == Constants.num_rounds
 
 #=======================================================================================================================
 class Stage2Questions(Page):
@@ -347,8 +335,7 @@ class Stage2Questions(Page):
     ]
 
     def is_displayed(self):
-        if (self.round_number == Constants.num_rounds):
-            return self.round_number == self.round_number
+        return self.round_number == Constants.num_rounds
     
     def before_next_page(self):
         player = self.player.in_round(1)
@@ -380,16 +367,14 @@ class Stage2DoubleMoney(Page):
         get_and_set_data(self.player, player, list_atrr)
 
     def is_displayed(self):
-        if (self.round_number == Constants.num_rounds):
-            return self.round_number == self.round_number
+        return self.round_number == Constants.num_rounds
 
 #=======================================================================================================================
 class Stage2HeadTails(Page):
     form_model = 'player'
 
     def is_displayed(self):
-        if (self.round_number == Constants.num_rounds):
-            return self.round_number == self.round_number
+        return self.round_number == Constants.num_rounds
     
     def live_method(self, data):
         player = self.in_round(1)
@@ -406,8 +391,7 @@ class Stage2HeadTails(Page):
 class Stage2ResultCoin(Page):
 
     def is_displayed(self):
-        if (self.round_number == Constants.num_rounds):
-            return self.round_number == self.round_number
+        return self.round_number == Constants.num_rounds
 
     def vars_for_template(self):
         player = self.player.in_round(1)
@@ -423,7 +407,7 @@ class Stage2ResultCoin(Page):
             cara_sello_name = "azul"
             payment_stage_2 = 5000-amount_inversion
 
-        player.in_round(1).payment_stage_2 = payment_stage_2
+        player.payment_stage_2 = payment_stage_2
 
         return {
             'amount_inversion' : amount_inversion,
@@ -434,9 +418,21 @@ class Stage2ResultCoin(Page):
 #=======================================================================================================================
 class ResultAllStages(Page):
 
+    form_model = 'player'
+    form_fields = ['choice_payment']
+    
     def is_displayed(self):
-        if (self.round_number == Constants.num_rounds):
-            return self.round_number == self.round_number 
+        return self.round_number == Constants.num_rounds
+    
+    def before_next_page(self):
+        player = self.player.in_round(1)
+        list_atrr = self.form_fields
+        get_and_set_data(self.player, player, list_atrr)
+
+        if player.choice_payment == 1:
+            player.payment_total = player.payment_stage_1
+        else:
+            player.payment_total = player.payment_stage_2
 
     def vars_for_template(self):
         player = self.player.in_round(1)
@@ -454,6 +450,20 @@ class ResultAllStages(Page):
             'payment_phase_4': payment_phase_4,
             'payment_stage_1': payment_stage_1,
             'payment_stage_2': payment_stage_2
+        } 
+
+#=======================================================================================================================
+class PaymentChoice(Page):
+
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+    
+    def vars_for_template(self):
+        player = self.player.in_round(1)
+        payment_total = player.payment_total
+
+        return{
+            'payment_total': payment_total
         } 
         
 #=======================================================================================================================
@@ -537,8 +547,7 @@ class SocioDemSurvey(Page):
         get_and_set_data(self.player, player, list_atrr)
     
     def is_displayed(self):
-        if (self.round_number == Constants.num_rounds):
-            return self.round_number == self.round_number 
+        return self.round_number == Constants.num_rounds
 
 # ******************************************************************************************************************** #
 # *** MANAGEMENT PAGES
@@ -546,5 +555,5 @@ class SocioDemSurvey(Page):
 #stage_1_sequence = [Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
 stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions, Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
 stage_2_sequence = [Stage2Start, Stage2Questions, Stage2DoubleMoney, Stage2HeadTails, Stage2ResultCoin]
-final_pages = [ResultAllStages, SocioDemSurvey]
+final_pages = [ResultAllStages, PaymentChoice, SocioDemSurvey]
 page_sequence = stage_1_sequence + stage_2_sequence + final_pages

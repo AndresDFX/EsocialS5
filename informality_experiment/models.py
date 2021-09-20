@@ -17,11 +17,11 @@ Your app description
 # ***                                                           UTILITY
 # ******************************************************************************************************************** #
 
-def make_radio_button(label, choices, fieldtype):
-    return models.fieldtype(
+def make_radiohorizontal_button(label, choices):
+    return models.IntegerField(
         choices=choices,
         label=label,
-        widget=widgets.RadioSelect,
+        widget=widgets.RadioSelectHorizontal,
     )
 
 def makefield_urn_decision():
@@ -80,6 +80,11 @@ def make_field2(label):
 # ***                                                           CHOICES
 # ******************************************************************************************************************** #
 
+choices_payment = [
+    [1,'Etapa 1'], 
+    [2,'Etapa 2']
+]
+
 #################### STAGE 1 #######################
 choices_gen_instructions1 = [
     [1,'2 puntos'], 
@@ -124,15 +129,16 @@ class Constants(BaseConstants):
     num_rounds = 20
 
     #STAGE 1
-    coin_value = 20
-    rate_error = 2
+    coin_value = 20 # default: 20
+    rate_error = 2 # default: 2
     min_length_textarea = 50 # default: 50
     max_length_textarea = 200 # default: 200
-    num_seconds_stage_1 = 30
+    num_seconds_stage_1 = 30 # default: 60
     urn_z_token_min_random = 2
     urn_z_token_max_random = 8
     urn_y_token_min_random = 0
     urn_y_token_max_random = 10
+
     images_per_phase = 25
     images_max_phase1 = images_per_phase
     images_max_phase2 = images_max_phase1*2
@@ -250,6 +256,11 @@ class Group(BaseGroup):
 class Player(BasePlayer):
 
     round_counter = makefield_integer()
+    payment_total = makefield_integer()
+    choice_payment = make_radiohorizontal_button(
+        "Seleccione el pago que desea: ",
+        choices_payment
+    )
 # ******************************************************************************************************************** #
 # *** STAGE 1
 # ******************************************************************************************************************** #
