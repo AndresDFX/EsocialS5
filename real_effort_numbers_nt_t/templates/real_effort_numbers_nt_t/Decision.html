@@ -1,0 +1,30 @@
+{% extends "real_effort_numbers_nt_t/base/global.html" %} 
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    {{titulo}}
+{% endblock %}
+
+{% block content %}
+{% if player.id_in_group == 1 %}
+<!--Jugador X-->
+<div class="wrapper instructions">
+    <p align="justify">
+        ¿Cree usted que el Jugador Y decidirá establecer un contrato por el cual deberá pagar $5,000 y usted deberá
+        pagar $3,000?
+        {% formfield player.believe_pay_contract %}
+    </p>
+</div>
+{% else %}
+<!--Jugador Y-->
+<div class="wrapper instructions">
+    <p align="justify">
+        ¿Desea establecer un contrato, por el que usted deberá pagar $5,000 y el Jugador X deberá pagar $3,000?
+        {% formfield player.pay_contract %}
+    </p>
+</div>
+{% endif %}
+{% next_button %}
+{% endblock %}

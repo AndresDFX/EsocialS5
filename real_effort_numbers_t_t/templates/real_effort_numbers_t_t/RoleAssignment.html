@@ -1,0 +1,30 @@
+{% extends "real_effort_numbers_t_t/base/global.html" %} 
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    Asignación de Rol
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+
+    <div class="wrapper instructions">
+        <p align = "justify">
+            {% if player.id_in_group == 1 %}
+                <!--Jugador X-->
+                <b>Equipo {{player.team}}. Jugador X</b><br><br>
+                {% comment %} Jugador X, T-T:{% endcomment %}A usted se le ha asignado el rol del jugador X, y estará emparejado con la misma persona de la Etapa 1. Le hemos transferido a usted una primera cuota de $8,000, que vienen de las ganancias del jugador Y.<br><br>
+            {% else %}
+                <!--Jugador Y-->
+                <b>Equipo {{player.team}}. Jugador Y</b><br><br>
+                {% comment %} Jugador Y, T-T:{% endcomment %}A usted se le ha asignado el rol del jugador Y, y estará emparejado con un jugador X quien es la misma persona de la Etapa 1. A esa persona le hemos transferido los $8,000 de la primera cuota, con parte de sus ganancias.<br><br>
+            {% endif %}
+        </p>
+    </div>
+    {% next_button %}
+{% endblock %}

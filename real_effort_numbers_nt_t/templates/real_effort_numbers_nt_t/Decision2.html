@@ -1,0 +1,45 @@
+{% extends "real_effort_numbers_nt_t/base/global.html" %} 
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    {{titulo}}
+{% endblock %}
+
+{% block content %}
+    <!--Jugador X-->
+    {% if player.id_in_group == 1 and opponent_contract_decision == True %}
+    <div class="wrapper instructions">
+        <p align="justify">
+            El Jugador Y ha tomado la decisión de establecer un contrato. Se descontarán $3,000 de sus ganancias.<br><br>
+
+            Recuerde que si luego de 10 minutos usted no ha completado las 50 restas correctas, le deduciremos $30,000 de
+            sus ganancias para transferírselos al Jugador Y.
+        </p>
+    </div>
+    {% endif %}
+    {% if player.id_in_group == 1 and opponent_contract_decision == False %}
+    <div class="wrapper instructions">
+        <p align="justify">
+            El Jugador Y ha tomado la decisión de NO establecer un contrato.
+        </p>
+    </div>
+    {% endif %}
+    <!--Jugador Y-->
+    {% if player.id_in_group == 2 and player.pay_contract == True %}
+    <div class="wrapper instructions">
+        <p align="justify">
+            Usted ha decidido establecer un contrato. Se descontarán $5,000 de sus ganancias.
+        </p>
+    </div>
+    {% endif %}
+    {% if player.id_in_group == 2 and player.pay_contract == False %}
+    <div class="wrapper instructions">
+        <p align="justify">
+            Usted ha decidido NO establecer un contrato.
+        </p>
+    </div>
+{% endif %}
+{% next_button %}
+{% endblock %}

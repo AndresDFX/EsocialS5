@@ -1,0 +1,23 @@
+{% extends "real_effort_numbers_t_nt/base/global.html" %} 
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    {% trans " Inicio Etapa 1" %}
+{% endblock %}
+
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+
+    <div class="wrapper instructions">
+        <p align = "justify">
+            La etapa comenzará a continuación. Luego de presionar el botón "Siguiente" empezará un conteo regresivo 
+            y usted iniciará 10 rondas, cada una de un minuto. Por favor, presione siguiente cuando esté preparado para iniciar.
+        </p>
+    </div>
+    {% next_button %}
+{% endblock %}
