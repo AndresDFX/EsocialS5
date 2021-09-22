@@ -49,10 +49,10 @@ class Constants(BaseConstants):
     payment_per_correct_answer = 50
 
     #STAGE 1
-    num_seconds_stage_1 = 5 # default: 60
+    num_seconds_stage_1 = 30 # default: 60
     sub_rounds_stage_1 = 10 # final: 10
-    num1_random_stage_1 = 1 # default: 50
-    num2_random_stage_1 = 2 # default: 99
+    num1_random_stage_1 = 50 # default: 50
+    num2_random_stage_1 = 99 # default: 99
     timeout_result_round = 5 # default: 10
     list_atrr_round = [
         'correct_answers_round1',
@@ -68,10 +68,10 @@ class Constants(BaseConstants):
     ]
 
     #STAGE 2
-    num_seconds_stage_2 = 60 # default: 60*10
+    num_seconds_stage_2 = 60*5 # default: 60*10
     mandatory_subtraction = 50 # default: 50
-    num1_random_stage_2 = 1 # default: 50
-    num2_random_stage_2 = 2 # default: 99
+    num1_random_stage_2 = 50 # default: 50
+    num2_random_stage_2 = 99 # default: 99
 
 
 class Subsession(BaseSubsession):

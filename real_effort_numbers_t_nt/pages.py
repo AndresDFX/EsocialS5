@@ -181,6 +181,7 @@ class CombinedResults(Page):
         total_substract = 0
         opponent_id = self.player.other_player().id_in_group
         opponent_id_in_subsession = self.player.other_player().id_in_subsession
+        team = self.player.in_round(self.round_number - 1).team
 
         for player in me_in_other_rounds:
             combined_payoff += player.payment_actual_round
@@ -199,7 +200,9 @@ class CombinedResults(Page):
         player_round1.answers_total_stage_1 =  total_substract
         player_round1.answers_wrong_stage_1 =  total_substract - correct_answers
 
+
         return {
+            'team': team,
             'combined_payoff' : math.trunc(combined_payoff),
             'combined_payoff_opponent': math.trunc(combined_payoff_opponent),
             'correct_answers': correct_answers,
