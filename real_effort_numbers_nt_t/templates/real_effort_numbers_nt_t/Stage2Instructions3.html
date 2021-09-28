@@ -4,7 +4,7 @@
 {# *** TITLE *** #}
 {# ****************************************************************************************************************** #}
 {% block title %}
-    Instrucciones Etapa 2
+    ¡BIENVENIDOS A LA ETAPA 2!
 {% endblock %}
 
 {# ****************************************************************************************************************** #}
@@ -15,37 +15,40 @@
     <div class="wrapper instructions">
         <p align = "justify">
             <b>Por favor, lea la siguiente situación  de la empresa Textilesa, cuidadosamente:</b><br>
-            
-            Textilesa es una empresa que produce textiles. Juan y María trabajan en Textilesa. 
-            Juan, quien tendrá el rol <i>X</i>, es el gerente financiero. María, quien tendrá el rol <i>Y</i>, es la propietaria. 
-            María necesita que Juan dirija las finanzas de la empresa. Para ello, María debe decidir <b>si lo contrata;</b> o, 
-            <b>si le paga por la actividad sin establecer un contrato.</b> 
-            Textilesa afronta un desajuste contable, por lo que Juan y María realizarán restas durante esta etapa para solucionar el problema.<br>
 
-            <ul>
-                <li>Si Juan (X) completa 50 restas correctas en 10 minutos, entonces María (rol Y) ganará $30,000. </li>
-                <li>Si Juan (X) hace menos de 50 restas correctas, entonces: </li>
-                <ul>
-                    <li>María (Y) no ganará nada, si no contrató a Juan (X).</li>
-                    <li>Juan (X) le pagará $30,000 a María (Y) si ella lo contrató. </li> 
-                </ul>
-            </ul>
-                       
-            Por su parte, María (Y), en reconocimiento al esfuerzo de Juan (X), le pagará $15,000 en 2 cuotas, 
-            de la siguiente manera:<br><br>
+            Textilesa es una empresa que produce textiles. 
+            María es la propietaria (Jugador Y), y está buscando quién dirija las finanzas de la empresa. 
+            Juan ha aplicado al puesto de gerente financiero (Jugador X), y María debe decidir <b>si establece un contrato</b>, 
+            o <b>si le paga por la actividad sin establecer un contrato</b>. Los contratos no son gratis, 
+            si María decide establecer un contrato a Juan, ella deberá pagar $5,000 y Juan deberá pagar $3,000. 
+            En caso de que María decida pagarle a Juan sin establecer contrato, ninguno de los dos incurrirá en costos contractuales.<br><br>
+
+            Textilesa afronta un desajuste contable, por lo que el trabajo de Juan en esta etapa será 
+            el encargado de realizar restas para solucionar el problema.<br>
             
+            <b>Los pagos de Juan (jugador X):</b> Por este trabajo, 
+            María (Y) le pagará a Juan (X) $15,000 en 2 cuotas, de la siguiente manera:
             <ul>
-                <li>En la primera cuota es de $8,000 y es obligatoria.</li> 
-                <li>La segunda cuota es de $7,000.</li>
+                <li>Una primera cuota de $8,000 obligatoria y por adelantado.</li>
+                <li>La segunda cuota de $7,000 que:</li>
                 <ul>
-                    <li>Es voluntaria si María no contrata a Juan.</li>
-                    <li>Es obligatoria si María contrata a Juan. </li>
+                    <li>Es voluntaria si María no le hace un contrato a Juan.</li>
+                    <li>Es obligatoria si María le hace un contrato a Juan.</li>
                 </ul>
             </ul>
 
-            Los contratos no son gratis. Si María decide contratar a Juan, ella deberá pagar $5,000 y Juan deberá pagar $3,000. 
-            En caso de que María decida pagarle a Juan sin establecer contrato, ninguno de los dos incurrirá en costos contractuales.
-
+            <b>Los pagos de María (Jugador Y):</b><br>
+            <ul>
+                <li>Si Juan (X) logra completar 50 restas correctas en 10 minutos habrá ajustado la contabilidad de Textilesa, 
+                    por lo que María (jugador Y) ganará $30,000.</li>
+                <li>Si Juan (X) hace menos de 50 restas correctas, los pagos de María (Y) 
+                    dependerán de si ella decidió establecer un contrato:</li>
+                <ul>
+                    <li><b>Si María (Y) contrató a Juan (X):</b> Juan (X) le pagará a María una multa por incumplimiento por un valor de $30,000.</li>
+                    <li><b>Si María (Y) NO contrató a Juan (X):</b> Juan (X) no pagará nada a María (Y), y María no ganará nada.</li>
+                </ul>
+            </ul><br>
+            
             <b>Ventajas y desventajas de la ausencia del contrato:</b><br><br>
             <p align="center"><img src="{% static 'images/ventajas_desventajas_etapa2.png' %}" alt="Ventajas y desventajas de la ausencia del contrato" style= "height: 90%; width: 90%; object-fit: cover"></p>
             

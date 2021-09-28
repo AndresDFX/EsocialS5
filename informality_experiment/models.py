@@ -367,7 +367,7 @@ class Player(BasePlayer):
 
     estado_civil = models.StringField(
         label='¿Cuál es su estado civil? (Por favor, escoja una opción)',
-        choices=['Soltero', 'casado', 'Unión libre', 'Divorciado', 'Viudo', 'Prefiero no decir']
+        choices=['Soltero', 'Casado', 'Unión libre', 'Divorciado', 'Viudo', 'Prefiero no decir']
     )
 
     hijos = models.IntegerField(label='¿Cuántos hijos tiene usted?')

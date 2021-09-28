@@ -48,8 +48,8 @@ class Constants(BaseConstants):
     #STAGE 1
     num_seconds_stage_1 = 30 # default: 60
     sub_rounds_stage_1 = 10 # final: 10
-    num1_random_stage_1 = 50 # default: 50
-    num2_random_stage_1 = 99 # default: 99
+    num1_random_stage_1 = 1 # default: 50
+    num2_random_stage_1 = 2 # default: 99
     timeout_result_round = 5 # default: 10
     list_atrr_round = [
         'correct_answers_round1',
@@ -67,8 +67,8 @@ class Constants(BaseConstants):
     #STAGE 2
     num_seconds_stage_2 = 60*5 # default: 60*10
     mandatory_subtraction = 50 # default: 50
-    num1_random_stage_2 = 50 # default: 50
-    num2_random_stage_2 = 99 # default: 99
+    num1_random_stage_2 = 1 # default: 50
+    num2_random_stage_2 = 2 # default: 99
 class Subsession(BaseSubsession):
     def creating_session(self):
 
@@ -174,9 +174,9 @@ class Player(BasePlayer):
         ],
         widget=widgets.RadioSelect,
     )
-    
+
     control_question_4 = models.IntegerField(
-        label="El Jugador X puede rechazar el contrato",
+        label="El Jugador X (Juan) puede rechazar el contrato",
         choices=[
             [1, "Verdadero"],
             [2, "Falso"],
@@ -185,10 +185,10 @@ class Player(BasePlayer):
     )
 
     control_question_5 = models.IntegerField(
-        label="¿Cuánto gana el Jugador X cuando NO hay un contrato?",
+        label="¿Cuánto gana el Jugador X (Juan) cuando NO hay un contrato?",
         choices=[
             [1, "$15,000 siempre"],
-            [2, "$8,000 si el Jugador Y sólo le paga una cuota y $15,000 si el Jugador Y le paga ambas cuotas"],
+            [2, "$8,000 si el Jugador Y (Maria) sólo le paga una cuota y $15,000 si el Jugador Y (Maria) le paga ambas cuotas"],
             [3, "Máximo $8,000"],
             [4, "Todos los jugadores reciben $8,000 al iniciar la Etapa 2."],
         ],
@@ -196,10 +196,10 @@ class Player(BasePlayer):
     )
 
     control_question_6 = models.IntegerField(
-        label="¿Cuánto gana el Jugador Y cuando SÍ hay un contrato?",
+        label="¿Cuánto gana el Jugador Y (Maria) cuando SÍ hay un contrato?",
         choices=[
             [1, "$10,000 siempre"],
-            [2, "$10,000 si el Jugador X realiza la tarea completa, y $0 si no lo hace"],
+            [2, "$10,000 si el Jugador X (Juan) realiza la tarea completa, y $0 si no lo hace"],
             [3, "$30,000"],
             [4, "Todos los jugadores ganan $15,000 en la Etapa 2"],
         ],
@@ -207,7 +207,7 @@ class Player(BasePlayer):
     )
 
     control_question_7 = models.IntegerField(
-        label="En total, ¿Cuánto le pagará a Juan si decide contratarlo? (por favor, registre su respuesta sin puntos ni comas)", 
+        label="En total, ¿Cuánto le pagará María a Juan si decide establecerle un contrato? (por favor, registre su respuesta sin puntos ni comas)", 
         min=0, 
         max=50000
     )
@@ -219,10 +219,11 @@ class Player(BasePlayer):
     )
 
     control_question_9 = models.IntegerField(
-        label="Si María contratara a Juan ¿Cuánto se le descontaría a Juan si no alcanzara a completar las 50 restas? (por favor, registre su respuesta sin puntos ni comas)", 
+        label="Si María le establece un contrato a Juan ¿Cuánto pagará Juan de multa si no alcanzara a completar las 50 restas? (por favor, registre su respuesta sin puntos ni comas)", 
         min=0, 
         max=50000
     )
+
 # ******************************************************************************************************************** #
 # *** Validaciones
 # ******************************************************************************************************************** #
@@ -280,22 +281,13 @@ class Player(BasePlayer):
 # *** Variables Contrato
 # ******************************************************************************************************************** #
     pay_contract = models.BooleanField(
-        label = "",
-         choices = [
+        label="",
+        choices=[
             [True, "Sí"],
             [False, "No"],
         ],
         widget = widgets.RadioSelect,
-        blank = True
-    )
-    believe_pay_contract = models.BooleanField(
-        label = "",
-         choices = [
-            [True, "Sí"],
-            [False, "No"],
-        ],
-        widget = widgets.RadioSelect,
-        blank = True
+        default = False
     )
     pay_second_quote = models.BooleanField(
         label="",
@@ -303,9 +295,11 @@ class Player(BasePlayer):
             [True, "Sí"],
             [False, "No"],
         ],
-        widget=widgets.RadioSelect,
-        blank=True
+        widget = widgets.RadioSelect,
+        default = True,
+        blank = True
     )
+
 # ******************************************************************************************************************** #
 # *** Variables Encuesta sociodemográfica
 # ******************************************************************************************************************** #
@@ -319,7 +313,7 @@ class Player(BasePlayer):
 
     estado_civil = models.StringField(
         label='¿Cuál es su estado civil? (Por favor, escoja una opción)',
-        choices=['Soltero', 'casado', 'Unión libre',
+        choices=['Soltero', 'Casado', 'Unión libre',
                  'Divorciado', 'Viudo', 'Prefiero no decir']
     )
 

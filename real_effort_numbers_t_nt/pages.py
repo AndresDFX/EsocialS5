@@ -34,7 +34,7 @@ def get_and_set_data_one_atrr(self_player, player, list_atrr, round_index, self_
 
 class Consent(Page):
     form_model = 'player'
-    form_fields = ['accepts_data', 'num_temporal', 'accepts_terms']
+    form_fields = ['num_temporal', 'accepts_terms']
 
     def is_displayed(self):
         return self.round_number == 1
@@ -44,10 +44,6 @@ class GenInstructions(Page):
     def is_displayed(self):
         return self.round_number == 1
 
-#=======================================================================================================================
-class Stage1Instructions(Page):
-    def is_displayed(self):
-        return self.round_number == 1
 
 #=======================================================================================================================
 class Stage1Questions(Page):
@@ -194,7 +190,6 @@ class CombinedResults(Page):
         combined_payoff_team = combined_payoff + combined_payoff_opponent
         combined_payoff_total = combined_payoff_team
 
-        #Si es T-T o T-NT el pago en la etapa uno es el pago del equipo más el pago fijo
         player_round1.payment_stage_1 = math.trunc(combined_payoff_total)
         player_round1.answers_correct_stage_1 = correct_answers
         player_round1.answers_total_stage_1 =  total_substract
@@ -218,17 +213,6 @@ class CombinedResults(Page):
 # ******************************************************************************************************************** #
 # *** STAGE 2
 # ******************************************************************************************************************** #
-
-class Stage2Instructions(Page):
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
-
-#=======================================================================================================================
-class Stage2Instructions2(Page):
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
-
-#=======================================================================================================================
 class Stage2Instructions3(Page):
 
     form_model = 'player'
@@ -238,7 +222,6 @@ class Stage2Instructions3(Page):
         return self.round_number == Constants.num_rounds
 
 #=======================================================================================================================
-
 class Stage2Instructions4(Page):
 
     def is_displayed(self):
@@ -250,16 +233,7 @@ class Stage2Instructions4(Page):
         return{
             'team_old': team_old,
             'team_new': team_new
-        }   
-
-#=======================================================================================================================
-class Stage2Instructions5(Page):
-
-    form_model = 'player'
-    form_fields = ['control_question_3']
-    
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
+        }  
 
 #=======================================================================================================================
 class RoleAssignment(Page):
@@ -276,11 +250,11 @@ class RoleAssignment(Page):
             'team_new': team_new
         }   
 
-#=======================================================================================================================
 
+#=======================================================================================================================
 class Decision(Page):
     form_model = 'player'
-    form_fields = ['pay_contract', 'believe_pay_contract']
+    form_fields = ['pay_contract']
 
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
@@ -403,7 +377,7 @@ class AddNumbers2(Page):
                 player.id_in_group: response
             }
         except AttributeError as e:
-            print("Excepcion conrolada", e)
+            print("Excepcion controlada", e)
 #=======================================================================================================================
 
 class ResultsWaitPage2(WaitPage):
@@ -484,15 +458,15 @@ class CombinedResults2(Page):
         contrato = 0
         
         pay_contract = player.pay_contract
+        pay_second_quote = player.pay_second_quote
         opponent_contract_decision = opponent.pay_contract
-        opponent_pay_second_quote = False
+        opponent_pay_second_quote = opponent.pay_second_quote
         
         if me == 1:
-            titulo = "Pagos Etapa 2 - Jugador X"
+            titulo = "Pagos Etapa 2 - Jugador X"       
         else:
             titulo = "Pagos Etapa 2 - Jugador Y"
-            opponent_pay_second_quote = self.player.pay_second_quote
-                   
+           
         answer_correct_stage_2 = player.correct_answers_actual_round
         answer_correct_stage_2_opponent = opponent.correct_answers_actual_round
         answers_total_stage_2 = player.total_substract_actual_round
@@ -526,10 +500,11 @@ class CombinedResults2(Page):
                     self.player.payment_stage_2 = -18000
 
             else: # Sin contrato
-                if not opponent_pay_second_quote: #Solo la primera cuota
-                    self.player.payment_stage_2 = 8000
-                else: #Pagando el jugador Y ambas cuotas
+                if opponent_pay_second_quote: #Decide Y pagar ambas cuotas
                     self.player.payment_stage_2 = 15000
+                else: #Pagando el jugador Y solo la primera cuota
+                    self.player.payment_stage_2 = 8000
+                    
 
         ############### JUGADOR Y ###############
         if player.id_in_group == 2:
@@ -538,18 +513,17 @@ class CombinedResults2(Page):
                 self.player.payment_stage_2 = 10000
 
             else: #Sin contrato
-                if answers_total_stage_2_opponent >= Constants.mandatory_subtraction: #Si X cumple con la cantidad de restas
-                    if not opponent_pay_second_quote: #Si decide no pagar la segunda cuota
-                        self.player.payment_stage_2 = 22000
-                    else: #Si decide pagar la segunda cuota
+                if answers_total_stage_2_opponent >= Constants.mandatory_subtraction: #Si X cumple con la cantidad de restas                
+                    if pay_second_quote: #Si decide pagar la segunda cuota
                         self.player.payment_stage_2 = 15000
-
+                    else:  #Si decide no pagar la segunda cuota
+                        self.player.payment_stage_2 = 22000
                 else:  #Si X no cumple con la cantidad de restas
-                    if not opponent_pay_second_quote: #Si decide no pagar la segunda cuota
-                        self.player.payment_stage_2 = -8000
-                    else: #Si decide pagar la segunda cuota
+                    if pay_second_quote: #Si decide pagar la segunda cuota
                         self.player.payment_stage_2 = -15000
-         
+                    else: #Si decide no pagar la segunda cuota
+                        self.player.payment_stage_2 = -8000
+            
         payment_stage_1 = player_round1.payment_stage_1
         payment_stage_2 = self.player.payment_stage_2
         player_round1.payment_stage_2 = payment_stage_2
@@ -774,13 +748,18 @@ class ReminderNequi(Page):
             'num_temporal': num_temporal
         }
 
+#=======================================================================================================================
+class Greeting(Page):
+
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+
 # ******************************************************************************************************************** #
 # *** MANAGEMENT STAGE
 # ******************************************************************************************************************** #
-stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions, Start, AddNumbers, ResultsWaitPage, PartialResults, CombinedResults]
-stage_2_sequence = [Stage2Instructions, Stage2Instructions2, Stage2Instructions3, Stage2Instructions4, Stage2Instructions5, RoleAssignment, Decision, ResultsWaitPage3, Decision2, Start2, AddNumbers2, ResultsWaitPage2, SecondQuoteY, WaitPageX, SecondQuoteX, CombinedResults2]
+stage_1_sequence = [Consent, GenInstructions, Stage1Questions, Start, AddNumbers, ResultsWaitPage, PartialResults, CombinedResults]
+stage_2_sequence = [Stage2Instructions3, Stage2Instructions4, RoleAssignment, Decision, ResultsWaitPage3, Decision2, Start2, AddNumbers2, ResultsWaitPage2, SecondQuoteY, WaitPageX, SecondQuoteX, CombinedResults2]
 #stage_2_sequence = [RoleAssignment, Decision, ResultsWaitPage3, Decision2, Start2, AddNumbers2, ResultsWaitPage2, SecondQuoteY, WaitPageX, SecondQuoteX, CombinedResults2]
-stage_3_sequence = [PlayCoin, DoubleMoney, HeadTails, ResultsDoubleMoney, CombinedResults3, SocioDemSurvey, CombinedResults4, ReminderNequi]
+stage_3_sequence = [PlayCoin, DoubleMoney, HeadTails, ResultsDoubleMoney, CombinedResults3, SocioDemSurvey, CombinedResults4, ReminderNequi, Greeting]
 
 page_sequence = stage_1_sequence + stage_2_sequence + stage_3_sequence
-
