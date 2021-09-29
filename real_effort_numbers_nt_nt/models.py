@@ -392,15 +392,15 @@ class Player(BasePlayer):
         ]
     )
 
-    #
-    alimentos = models.IntegerField(label="Alimentos")
-    aseo = models.IntegerField(label="Productos de aseo")
-    electronicos = models.IntegerField(label="Artículos electrónicos")
-    transporte = models.IntegerField(label="Transporte")
-    servicios = models.IntegerField(label="Pago de servicios")
-    diversion = models.IntegerField(label="Diversión y ocio")
-    ahorro = models.IntegerField(label="Ahorro")
-    deudas = models.IntegerField(label="Pago de deudas")
+    #Pregunta 13
+    alimentos = models.FloatField(label="Alimentos", min=0.0, max=100.0)
+    aseo = models.FloatField(label="Productos de aseo", min=0.0, max=100.0)
+    electronicos = models.FloatField(label="Artículos electrónicos", min=0.0, max=100.0)
+    transporte = models.FloatField(label="Transporte", min=0.0, max=100.0)
+    servicios = models.FloatField(label="Pago de servicios", min=0.0, max=100.0)
+    diversion  = models.FloatField(label="Diversión y ocio", min=0.0, max=100.0)
+    ahorro = models.FloatField(label="Ahorro", min=0.0, max=100.0)
+    deudas = models.FloatField(label="Pago de deudas", min=0.0, max=100.0)
 
     #Esacala Likert
     offer_1 = models.IntegerField(widget=widgets.RadioSelect, choices=[

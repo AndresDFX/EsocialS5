@@ -1,5 +1,8 @@
 {% extends "real_effort_numbers_t_t/base/global.html" %} 
 
+{# ****************************************************************************************************************** #}
+{# *** STYLES *** #}
+{# ****************************************************************************************************************** #}
 {% block styles %}
     <style>
 
@@ -41,12 +44,16 @@
     </style>
 {% endblock %}
 
-
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
 {% block title %}
     ENCUESTA DE DATOS SOCIODEMOGRÁFICOS
 {% endblock %}
 
-
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
 {% block content %}
 
     <hr>
@@ -83,7 +90,7 @@
         <li> {% formfield player.gasto_mensual %}</li>
 
         <li>Suponga que sus ingresos mensuales son de 100 dólares ($100 US). Por favor, indique cual
-            sería el porcentaje de ese dinero que usted destinaria para las siguientes categorías:
+            sería el porcentaje de ese dinero que usted destinaria para las siguientes categorías <b>(recuerde que este porcentaje debe sumar 100)</b>:
             <br>
             <br>
             <strong>Ejemplo:</strong> si de los 100 dólares usted destina 30 para el pago de la gasolina de su vehículo,
@@ -144,6 +151,7 @@
                 <td>{{ form.deudas }}</td>
             </tr>
         </table>
+        {{ formfield_errors 'deudas' }}
 
         <br>
 
@@ -165,7 +173,7 @@
         <br>
 
         <li>Organice de mayor a menor las características que le parecen más relevantes según el orden de
-            sus prioridades y preferencias, siendo 1 lo menos relevante y 5 lo más relevante.</li>
+            sus prioridades y preferencias, siendo 1 lo menos relevante y 5 lo más relevante <b>(recuerde que los números no se pueden repetir)</b>.</li>
 
             <br>
 
@@ -185,7 +193,7 @@
                     <td> {{ form.Protección }}</td>
                 </tr>
             </table>
-
+            {{ formfield_errors 'Protección' }}
             <br>
 
         <li>Por favor, indique en qué medida está de acuerdo o no con cada una de las siguientes 10
@@ -482,3 +490,15 @@
         {% next_button %}
 
 {% endblock %}
+
+{# ****************************************************************************************************************** #}
+{# *** SCRIPTS *** #}
+{# ****************************************************************************************************************** #}
+{% block scripts %}
+
+    <script>
+        $('.form-control-errors').attr('class', 'form-control-errors card text-white bg-danger');
+    </script>
+
+{% endblock %}
+

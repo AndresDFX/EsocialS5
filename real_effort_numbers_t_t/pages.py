@@ -687,11 +687,26 @@ class SocioDemSurvey(Page):
 
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
-
+    
     def before_next_page(self):
         player = self.player.in_round(1)
         list_atrr = self.form_fields
         get_and_set_data(self.player, player, list_atrr)
+    
+    def error_message(self, values):
+        error_messages = dict()
+
+        sum = values['alimentos'] + values['aseo'] + values['electronicos'] + values['transporte'] \
+            + values['servicios'] + values['diversion'] + values['ahorro'] + values['deudas'] 
+        list_iter = [values['Estabilidad'], values['Independencia'], values['Descanso'], \
+                    values['Lucro'], values['Protección'] ]
+        list_new = set(list_iter)
+        
+        if sum != 100:
+            error_messages['deudas'] = 'Recuerde que la suma de los porcentajes debe ser 100'
+        if len(list_new) != len(list_iter):
+            error_messages['Protección'] = 'Debe seleccionar un valor unico a cada item'
+        return error_messages
 
 #=======================================================================================================================
 
@@ -741,7 +756,6 @@ stage_1_sequence = [Consent, GenInstructions, Stage1Questions, Start, AddNumbers
 stage_2_sequence = [Stage2Instructions3, Stage2Instructions4, RoleAssignment, Decision, ResultsWaitPage3, Decision2, Start2, AddNumbers2, ResultsWaitPage2, SecondQuoteY, WaitPageX, SecondQuoteX, CombinedResults2]
 #stage_2_sequence = [RoleAssignment, Decision, ResultsWaitPage3, Decision2, Start2, AddNumbers2, ResultsWaitPage2, SecondQuoteY, WaitPageX, SecondQuoteX, CombinedResults2]
 stage_3_sequence = [PlayCoin, DoubleMoney, HeadTails, ResultsDoubleMoney, CombinedResults3, SocioDemSurvey, CombinedResults4, ReminderNequi, Greeting]
-
 
 page_sequence = stage_1_sequence + stage_2_sequence + stage_3_sequence
 
