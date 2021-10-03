@@ -4,9 +4,8 @@
 {# *** TITLE *** #}
 {# ****************************************************************************************************************** #}
 {% block title %}
-    {% trans "Preguntas de Control Etapa 1" %}
+    Preguntas de Control Etapa 1
 {% endblock %}
-
 
 {# ****************************************************************************************************************** #}
 {# *** CONTENT *** #}
@@ -14,16 +13,14 @@
 {% block content %}
 
     <div class="wrapper instructions">
-        <p align = "justify">
-            {% comment %} Todos:{% endcomment %} Esta etapa tiene 10 rondas. En cada ronda usted y otra persona con la que será emparejado (a),
+        <align align = "justify">
+            {% comment %} Todos:{% endcomment %} Esta etapa tiene {{Constants.sub_rounds_stage_1}} rondas. En cada ronda usted y otra persona con la que será emparejado (a),
             deberán realizar restas de números de dos dígitos a lo largo de un minuto.
-            Por cada resta correcta, cada miembro de la pareja recibirá $50.<br><br>
+            Por cada resta correcta, cada miembro de la pareja recibirá ${{Constants.payment_per_correct_answer}}.<br><br>
 
-            En esta etapa usted estará emparejado con un participante distinto cada ronda.<br><br>
-            
             <b>Ejemplo:</b><br>
             Imaginemos que hay dos jugadores, María y Juan y que ambos completan, al finalizar la Etapa 1, 50 restas correctas cada uno. 
-            Esto quiere decir que tendrán en total 100 restas correctas, equivalentes a 5000 pesos en total, tal como lo muestra la tabla:<br><br>
+            Esto quiere decir que tendrán en total 100 restas correctas, equivalentes a 10,000 pesos en total, tal como lo muestra la tabla:<br><br>
             <div style="text-align: center;">
                 <img src="{% static 'images/table_explain_paymentstage1.png' %}" style= "object-fit: cover">
             </div>

@@ -133,7 +133,7 @@ class Constants(BaseConstants):
     rate_error = 2 # default: 2
     min_length_textarea = 50 # default: 50
     max_length_textarea = 200 # default: 200
-    num_seconds_stage_1 = 30 # default: 60
+    num_seconds_stage_1 = 60 # default: 60
     urn_z_token_min_random = 2
     urn_z_token_max_random = 8
     urn_y_token_min_random = 0
@@ -141,9 +141,9 @@ class Constants(BaseConstants):
 
     images_per_phase = 25
     images_max_phase1 = images_per_phase
-    images_max_phase2 = images_max_phase1*2
-    images_max_phase3 = images_max_phase1*3
-    images_max_phase4 = images_max_phase1*4 
+    images_max_phase2 = images_per_phase*2
+    images_max_phase3 = images_per_phase*3
+    images_max_phase4 = images_per_phase*4 
     images_names_questions = [
         '1_1_1_4',
         '1_1_2_5',

@@ -43,14 +43,14 @@ class Constants(BaseConstants):
     players_per_group = 2
     num_rounds = 11
     fixed_payment = 5000
-    payment_per_correct_answer = 50
+    payment_per_correct_answer = 100
 
     #STAGE 1
-    num_seconds_stage_1 = 30 # default: 60
+    num_seconds_stage_1 = 60 # default: 60
     sub_rounds_stage_1 = 10 # final: 10
-    num1_random_stage_1 = 1 # default: 50
-    num2_random_stage_1 = 2 # default: 99
-    timeout_result_round = 5 # default: 10
+    num1_random_stage_1 = 50 # default: 50
+    num2_random_stage_1 = 99 # default: 99
+    timeout_result_round = 5 # default: 5
     list_atrr_round = [
         'correct_answers_round1',
         'correct_answers_round2',
@@ -65,10 +65,10 @@ class Constants(BaseConstants):
     ]
 
     #STAGE 2
-    num_seconds_stage_2 = 60*5 # default: 60*10
+    num_seconds_stage_2 = 60*10# default: 60*10
     mandatory_subtraction = 50 # default: 50
-    num1_random_stage_2 = 1 # default: 50
-    num2_random_stage_2 = 2 # default: 99
+    num1_random_stage_2 = 50 # default: 50
+    num2_random_stage_2 = 99 # default: 99
 
 class Subsession(BaseSubsession):
     def creating_session(self):
@@ -157,8 +157,8 @@ class Player(BasePlayer):
     control_question_2 = models.IntegerField(
         label="Si en la ronda 1, mi compañero(a) y yo logramos 20 restas correctas, cada uno ganará:",
         choices = [
-            [1, "1000"],
-            [2, "2000"],
+            [1, "2000"],
+            [2, "1000"],
             [3, "3000"],
         ],
         widget = widgets.RadioSelect,
@@ -235,7 +235,7 @@ class Player(BasePlayer):
 
     def control_question_2_error_message(self, value):
         if value != 1:
-            return 'Recuerde que ganarán $50 por cada respuesta correcta que hayan dado juntos.'
+            return 'Recuerde que ganarán $100 por cada respuesta correcta que hayan dado juntos.'
     
     def control_question_3_error_message(self, value):
         if value != 3:

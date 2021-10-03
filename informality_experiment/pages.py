@@ -556,4 +556,6 @@ class SocioDemSurvey(Page):
 stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions, Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
 stage_2_sequence = [Stage2Start, Stage2Questions, Stage2DoubleMoney, Stage2HeadTails, Stage2ResultCoin]
 final_pages = [ResultAllStages, PaymentChoice, SocioDemSurvey]
-page_sequence = stage_1_sequence + stage_2_sequence + final_pages
+
+#page_sequence = stage_1_sequence + stage_2_sequence + final_pages
+page_sequence = [Stage1Round]
