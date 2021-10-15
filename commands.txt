@@ -17,15 +17,21 @@ heroku pg:backups:download --app esocials5
 --Importar BD postgres en local
 pg_restore --verbose --clean --no-acl --no-owner -h localhost -U postgres -d esocials5 latest.dump
 
---Obtener ID de una sesion
-SELECT id FROM otree_session WHERE code ='9efzwyo9'
+--Mostrar data
+SELECT id, code FROM otree_session WHERE code IN (
+'rk0fqlyn',
+'em19271j',
+'9y6z0wlb',
+'6yjd9xjr',
+'k2unahqh',
+'4rj92hl9'
+)
 
---Con el ID de la sesion obtengo el nombre de la app
 SELECT _current_app_name FROM otree_participant 
-WHERE session_id = 11
+WHERE session_id = 9
 
---Obtiene los datos de los player en determinada sesion y en la ronda 1
-SELECT * 
-FROM informality_experiment_player 
-WHERE session_id = 5 AND round_number = 1
+SELECT participant_id, * 
+FROM real_effort_numbers_t_t_player
+WHERE session_id = 9 AND (round_number = 1
+OR round_number = 11)
 ORDER BY participant_id ASC
