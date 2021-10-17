@@ -315,22 +315,19 @@ class Player(BasePlayer):
 
     estado_civil = models.StringField(
         label='¿Cuál es su estado civil? (Por favor, escoja una opción)',
-        choices=['Soltero', 'Casado', 'Unión libre',
-                 'Divorciado', 'Viudo', 'Prefiero no decir']
+        choices=['Soltero', 'Casado', 'Unión libre', 'Divorciado', 'Viudo', 'Prefiero no decir']
     )
 
     hijos = models.IntegerField(label='¿Cuántos hijos tiene usted?')
 
     etnia = models.StringField(
         label='De acuerdo con su cultura o rasgos físicos, usted es o se reconoce como:(Por favor, escoja una opción)',
-        choices=['Afrocolombiano', 'Indigena', 'Mestizo', 'Mulato', 'Blanco',
-                 'Raizal del archipielago', 'Palenquero', 'Otro', 'Prefiero no decir']
+        choices=['Afrocolombiano', 'Indigena', 'Mestizo', 'Mulato', 'Blanco', 'Raizal del archipielago', 'Palenquero', 'Otro', 'Prefiero no decir']
     )
 
     religion = models.StringField(
         label='¿En cuál de los siguientes grupos se identifica usted?(Por favor, escoja una opción)',
-        choices=['Católico', 'Cristiano', 'Testigo de Jehová', 'Ateo', 'Agnóstico',
-                 'Judío', 'Musulmán', 'Hinduista', 'Otro', 'Prefiero no decir']
+        choices=['Católico', 'Cristiano', 'Testigo de Jehová', 'Ateo', 'Agnóstico', 'Judío', 'Musulmán', 'Hinduista', 'Otro', 'Prefiero no decir' ]
     )
 
     estudios = models.StringField(
@@ -353,8 +350,7 @@ class Player(BasePlayer):
 
     actividad_actual = models.StringField(
         label='Actualmente, ¿cuál es su actividad principal? (Por favor, escoja una opción)',
-        choices=['Estudiar', 'Trabajar', 'Oficios del hogar',
-                 'Buscar trabajo', 'Otra actividad']
+        choices=['Estudiar', 'Trabajar', 'Oficios del hogar', 'Buscar trabajo' ,'Otra actividad']
     )
 
     esta_laborando = models.BooleanField(
@@ -393,119 +389,45 @@ class Player(BasePlayer):
         ]
     )
 
-    #Pregunta 13
-    alimentos = models.FloatField(label="Alimentos", min=0.0, max=100.0)
-    aseo = models.FloatField(label="Productos de aseo", min=0.0, max=100.0)
-    electronicos = models.FloatField(label="Artículos electrónicos", min=0.0, max=100.0)
-    transporte = models.FloatField(label="Transporte", min=0.0, max=100.0)
-    servicios = models.FloatField(label="Pago de servicios", min=0.0, max=100.0)
-    diversion  = models.FloatField(label="Diversión y ocio", min=0.0, max=100.0)
-    ahorro = models.FloatField(label="Ahorro", min=0.0, max=100.0)
-    deudas = models.FloatField(label="Pago de deudas", min=0.0, max=100.0)
-
     #Esacala Likert
-    offer_1 = models.IntegerField(widget=widgets.RadioSelect, choices=[
-                                  1, 2, 3, 4, 5, 6, 7, 8, 9, 10], label="")
+    offer_1 = models.IntegerField(widget=widgets.RadioSelect, choices=[1,2,3,4,5,6,7,8,9,10], label= "")
 
-    Estabilidad = models.IntegerField(choices=[
-                                      1, 2, 3, 4, 5], label='Mantenerse invariable o inalterable en el mismo lugar, estado o situación.')
-    Independencia = models.IntegerField(
-        choices=[1, 2, 3, 4, 5], label='Autonomía de tomar las decisiones propias.')
-    Descanso = models.IntegerField(
-        choices=[1, 2, 3, 4, 5], label='Reposar fuerzas a través de un estado inactivo')
-    Lucro = models.IntegerField(
-        choices=[1, 2, 3, 4, 5], label='Ganancia o provecho de algún actividad u objeto.')
-    Protección = models.IntegerField(
-        choices=[1, 2, 3, 4, 5], label='Seguridad o respaldo frente a un acontecimiento.')
+    Estabilidad = models.IntegerField(choices=[1,2,3,4,5], label='Mantenerse invariable o inalterable en el mismo lugar, estado o situación.')
+    Independencia = models.IntegerField(choices=[1,2,3,4,5], label='Autonomía de tomar las decisiones propias.')
+    Descanso = models.IntegerField(choices=[1,2,3,4,5], label='Reposar fuerzas a través de un estado inactivo')
+    Lucro = models.IntegerField(choices=[1,2,3,4,5], label='Ganancia o provecho de algún actividad u objeto.')
+    Protección = models.IntegerField(choices=[1,2,3,4,5], label='Seguridad o respaldo frente a un acontecimiento.')
 
-    encuesta_tabla1_pregunta1 = make_field(
-        'Por lo general, cuando consigo lo que quiero es porque me he esforzado por lograrlo.')
-    encuesta_tabla1_pregunta2 = make_field(
-        'Cuando hago planes estoy casi seguro (a) que conseguiré que lleguen a buen término.')
-    encuesta_tabla1_pregunta3 = make_field(
-        'Prefiero los juegos que entrañan algo de suerte que los que sólo requieren habilidad.')
-    encuesta_tabla1_pregunta4 = make_field(
-        'Si me lo propongo, puedo aprender casi cualquier cosa.')
-    encuesta_tabla1_pregunta5 = make_field(
-        'Mis mayores logros se deben más que nada a mi trabajo arduo y a mi capacidad.')
-    encuesta_tabla1_pregunta6 = make_field(
-        'Por lo general no establezco metas porque se me dificulta mucho hacer lo necesario para alcanzarlas.')
-    encuesta_tabla1_pregunta7 = make_field(
-        'La competencia desalienta la excelencia.')
-    encuesta_tabla1_pregunta8 = make_field(
-        'Las personas a menudo salen adelante por pura suerte.')
-    encuesta_tabla1_pregunta9 = make_field(
-        'En cualquier tipo de examen o competencia me gusta comparar mis calificaciones con las de los demás.')
-    encuesta_tabla1_pregunta10 = make_field(
-        'Pienso que no tiene sentido empeñarme en trabajar en algo que es demasiado difícil para mí.')
-
-    encuesta_tabla2_pregunta1 = make_field(
-        'Podré alcanzar la mayoría de los objetivos que me he propuesto.')
-    encuesta_tabla2_pregunta2 = make_field(
-        'Cuando me enfrento a tareas difíciles, estoy seguro de que las cumpliré.')
-    encuesta_tabla2_pregunta3 = make_field(
-        'En general, creo que puedo obtener resultados que son importantes para mí.')
-    encuesta_tabla2_pregunta4 = make_field(
-        'Creo que puedo tener éxito en cualquier esfuerzo que me proponga.')
-    encuesta_tabla2_pregunta5 = make_field(
-        'Seré capaz de superar con éxito muchos desafíos.')
-    encuesta_tabla2_pregunta6 = make_field(
-        'Confío en que puedo realizar eficazmente muchas tareas diferentes.')
-    encuesta_tabla2_pregunta7 = make_field(
-        'Comparado con otras personas, puedo hacer la mayoría de las tareas muy bien.')
-    encuesta_tabla2_pregunta8 = make_field(
-        'Incluso cuando las cosas son difíciles, puedo realizarlas bastante bien.')
-    encuesta_tabla2_pregunta9 = make_field(
-        'Podré alcanzar la mayoría de los objetivos que me he propuesto.')
-
-    encuesta_tabla3_pregunta1 = make_field2('Llegar tarde a una cita')
-    encuesta_tabla3_pregunta2 = make_field2('Comprar a vendedores ambulantes')
-    encuesta_tabla3_pregunta3 = make_field2('Tirar basura en la calle')
-    encuesta_tabla3_pregunta4 = make_field2(
-        'Trabajar y recibir un pago sin que haya firmado un contrato formal (pintar una casa, realizar un reporte, etc.)')
-    encuesta_tabla3_pregunta5 = make_field2(
-        'Silbar o decirle un piropo a un (a) desconocido (a) en la calle')
-    encuesta_tabla3_pregunta6 = make_field2(
-        'Darle trabajo a alguien y pagarle sin pedirle que firme un contrato formal (pintar una casa, realizar un reporte, etc.)')
-    encuesta_tabla3_pregunta7 = make_field2(
-        'Consumir cerveza, aguardiente, ron u otras bebidas alcohólicas en un andén o parque')
-    encuesta_tabla3_pregunta8 = make_field2(
-        'No cotizar al sistema de pensiones')
-    encuesta_tabla3_pregunta9 = make_field2('No aportar al sistema de salud')
-    encuesta_tabla3_pregunta10 = make_field2(
-        'No ceder un asiento preferente a una embarazada o un(a) anciano(a) se sube al bus')
-    encuesta_tabla3_pregunta11 = make_field2('Colarse en las filas')
-    encuesta_tabla3_pregunta12 = make_field2('No tener cuenta bancaria')
-    encuesta_tabla3_pregunta13 = make_field2(
-        'Pedir dinero prestado a prestamistas informales (ejemplo: gota a gota)')
-    encuesta_tabla3_pregunta14 = make_field2(
-        'No recoger los desechos de las mascotas')
-    encuesta_tabla3_pregunta15 = make_field2(
-        'Usar transportes alternativos como piratas o mototaxis')
-    encuesta_tabla3_pregunta16 = make_field2(
-        'Vender cosas o hacer negocios de manera informal')
-    encuesta_tabla3_pregunta17 = make_field2(
-        'Usar plataformas de transporte como Uber, Didi, etc.')
-    encuesta_tabla3_pregunta18 = make_field2('No votar')
-    encuesta_tabla3_pregunta19 = make_field2(
-        'Ir a eventos políticos para conseguir empleo/beneficios personales')
-    encuesta_tabla3_pregunta20 = make_field2(
-        'Comprar réplicas de productos originales (lociones, bolsos, zapatos, camisas)')
-    encuesta_tabla3_pregunta21 = make_field2('Comprar productos sin factura')
-    encuesta_tabla3_pregunta22 = make_field2('Subarrendar una habitación')
-    encuesta_tabla3_pregunta23 = make_field2(
-        'Vivir en una habitación subarrendada')
-    encuesta_tabla3_pregunta24 = make_field2(
-        'No usar el paso cebra o los puentes peatonales para cruzar una calle')
-    encuesta_tabla3_pregunta25 = make_field2(
-        'Cruzar caminando una calle cuando el semáforo peatonal está en rojo')
-    encuesta_tabla3_pregunta26 = make_field2(
-        'Circular en bicicleta por el andén (no usar la cicloruta)')
+    encuesta_tabla3_pregunta1 = make_field2 ('Llegar tarde a una cita')
+    encuesta_tabla3_pregunta2 = make_field2 ('Comprar a vendedores ambulantes')
+    encuesta_tabla3_pregunta3 = make_field2 ('Tirar basura en la calle')
+    encuesta_tabla3_pregunta4 = make_field2 ('Trabajar y recibir un pago sin que haya firmado un contrato formal (pintar una casa, realizar un reporte, etc.)')
+    encuesta_tabla3_pregunta5 = make_field2 ('Silbar o decirle un piropo a un (a) desconocido (a) en la calle')
+    encuesta_tabla3_pregunta6 = make_field2 ('Darle trabajo a alguien y pagarle sin pedirle que firme un contrato formal (pintar una casa, realizar un reporte, etc.)')
+    encuesta_tabla3_pregunta7 = make_field2 ('Consumir cerveza, aguardiente, ron u otras bebidas alcohólicas en un andén o parque')
+    encuesta_tabla3_pregunta8 = make_field2 ('No cotizar al sistema de pensiones')
+    encuesta_tabla3_pregunta9 = make_field2 ('No aportar al sistema de salud')
+    encuesta_tabla3_pregunta10 = make_field2 ('No ceder un asiento preferente a una embarazada o un(a) anciano(a) se sube al bus')
+    encuesta_tabla3_pregunta11 = make_field2 ('Colarse en las filas')
+    encuesta_tabla3_pregunta12 = make_field2 ('No tener cuenta bancaria')
+    encuesta_tabla3_pregunta13 = make_field2 ('Pedir dinero prestado a prestamistas informales (ejemplo: gota a gota)')
+    encuesta_tabla3_pregunta14 = make_field2 ('No recoger los desechos de las mascotas')
+    encuesta_tabla3_pregunta15 = make_field2 ('Usar transportes alternativos como piratas o mototaxis')
+    encuesta_tabla3_pregunta16 = make_field2 ('Vender cosas o hacer negocios de manera informal')
+    encuesta_tabla3_pregunta17 = make_field2 ('Usar plataformas de transporte como Uber, Didi, etc.')
+    encuesta_tabla3_pregunta18 = make_field2 ('No votar')
+    encuesta_tabla3_pregunta19 = make_field2 ('Ir a eventos políticos para conseguir empleo/beneficios personales')
+    encuesta_tabla3_pregunta20 = make_field2 ('Comprar réplicas de productos originales (lociones, bolsos, zapatos, camisas)')
+    encuesta_tabla3_pregunta21 = make_field2 ('Comprar productos sin factura')
+    encuesta_tabla3_pregunta22 = make_field2 ('Subarrendar una habitación')
+    encuesta_tabla3_pregunta23 = make_field2 ('Vivir en una habitación subarrendada')
+    encuesta_tabla3_pregunta24 = make_field2 ('No usar el paso cebra o los puentes peatonales para cruzar una calle')
+    encuesta_tabla3_pregunta25 = make_field2 ('Cruzar caminando una calle cuando el semáforo peatonal está en rojo')
+    encuesta_tabla3_pregunta26 = make_field2 ('Circular en bicicleta por el andén (no usar la cicloruta)')
 
 # ******************************************************************************************************************** #
 # *** Acceder al otro jugador
 # ******************************************************************************************************************** #
-
     def other_player(self):
         # self.get_others_in_group() -> Vector[<Player  2>, <Player  3>, <Player  4>]
         return self.get_others_in_group()[0]
