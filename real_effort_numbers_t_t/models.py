@@ -66,7 +66,7 @@ class Constants(BaseConstants):
 
     #STAGE 2
     num_seconds_stage_2 = 60*10 # default: 60*10
-    mandatory_subtraction = 50 # default: 50
+    mandatory_subtraction = 65 # default: 65
     num1_random_stage_2 = 50 # default: 50
     num2_random_stage_2 = 99 # default: 99
 
@@ -122,6 +122,7 @@ class Player(BasePlayer):
 # *** STAGE 2
 # ******************************************************************************************************************** #
     answers_correct_stage_2 = models.IntegerField(initial=0)
+    answers_correct_expected_stage_2 = models.IntegerField(initial=0)
     answers_wrong_stage_2 = models.IntegerField(initial=0)
     answers_total_stage_2 = models.IntegerField(initial=0)
     payment_stage_2 = models.IntegerField(initial=0)
@@ -215,7 +216,7 @@ class Player(BasePlayer):
     )
 
     control_question_9 = models.IntegerField(
-        label="Si María le establece un contrato a Juan ¿Cuánto pagará Juan de multa si no alcanzara a completar las 50 restas? (por favor, registre su respuesta sin puntos ni comas)", 
+        label=f"Si María le establece un contrato a Juan ¿Cuánto pagará Juan de multa si no alcanzara a completar las {Constants.mandatory_subtraction} restas? (por favor, registre su respuesta sin puntos ni comas)", 
         min=0, 
         max=50000
     )
@@ -384,16 +385,6 @@ class Player(BasePlayer):
         ]
     )
 
-    #Pregunta 13
-    alimentos = models.FloatField(label="Alimentos", min=0.0, max=100.0)
-    aseo = models.FloatField(label="Productos de aseo", min=0.0, max=100.0)
-    electronicos = models.FloatField(label="Artículos electrónicos", min=0.0, max=100.0)
-    transporte = models.FloatField(label="Transporte", min=0.0, max=100.0)
-    servicios = models.FloatField(label="Pago de servicios", min=0.0, max=100.0)
-    diversion  = models.FloatField(label="Diversión y ocio", min=0.0, max=100.0)
-    ahorro = models.FloatField(label="Ahorro", min=0.0, max=100.0)
-    deudas = models.FloatField(label="Pago de deudas", min=0.0, max=100.0)
-
     #Esacala Likert
     offer_1 = models.IntegerField(widget=widgets.RadioSelect, choices=[1,2,3,4,5,6,7,8,9,10], label= "")
 
@@ -402,27 +393,6 @@ class Player(BasePlayer):
     Descanso = models.IntegerField(choices=[1,2,3,4,5], label='Reposar fuerzas a través de un estado inactivo')
     Lucro = models.IntegerField(choices=[1,2,3,4,5], label='Ganancia o provecho de algún actividad u objeto.')
     Protección = models.IntegerField(choices=[1,2,3,4,5], label='Seguridad o respaldo frente a un acontecimiento.')
-
-    encuesta_tabla1_pregunta1 = make_field('Por lo general, cuando consigo lo que quiero es porque me he esforzado por lograrlo.')
-    encuesta_tabla1_pregunta2 = make_field('Cuando hago planes estoy casi seguro (a) que conseguiré que lleguen a buen término.')
-    encuesta_tabla1_pregunta3 = make_field('Prefiero los juegos que entrañan algo de suerte que los que sólo requieren habilidad.')
-    encuesta_tabla1_pregunta4 = make_field('Si me lo propongo, puedo aprender casi cualquier cosa.')
-    encuesta_tabla1_pregunta5 = make_field('Mis mayores logros se deben más que nada a mi trabajo arduo y a mi capacidad.')
-    encuesta_tabla1_pregunta6 = make_field('Por lo general no establezco metas porque se me dificulta mucho hacer lo necesario para alcanzarlas.')
-    encuesta_tabla1_pregunta7 = make_field('La competencia desalienta la excelencia.')
-    encuesta_tabla1_pregunta8 = make_field('Las personas a menudo salen adelante por pura suerte.')
-    encuesta_tabla1_pregunta9 = make_field('En cualquier tipo de examen o competencia me gusta comparar mis calificaciones con las de los demás.')
-    encuesta_tabla1_pregunta10 = make_field('Pienso que no tiene sentido empeñarme en trabajar en algo que es demasiado difícil para mí.')
-
-    encuesta_tabla2_pregunta1 = make_field('Podré alcanzar la mayoría de los objetivos que me he propuesto.')
-    encuesta_tabla2_pregunta2 = make_field('Cuando me enfrento a tareas difíciles, estoy seguro de que las cumpliré.')
-    encuesta_tabla2_pregunta3 = make_field('En general, creo que puedo obtener resultados que son importantes para mí.')
-    encuesta_tabla2_pregunta4 = make_field('Creo que puedo tener éxito en cualquier esfuerzo que me proponga.')
-    encuesta_tabla2_pregunta5 = make_field('Seré capaz de superar con éxito muchos desafíos.')
-    encuesta_tabla2_pregunta6 = make_field('Confío en que puedo realizar eficazmente muchas tareas diferentes.')
-    encuesta_tabla2_pregunta7 = make_field('Comparado con otras personas, puedo hacer la mayoría de las tareas muy bien.')
-    encuesta_tabla2_pregunta8 = make_field('Incluso cuando las cosas son difíciles, puedo realizarlas bastante bien.')
-    encuesta_tabla2_pregunta9 = make_field('Podré alcanzar la mayoría de los objetivos que me he propuesto.')
 
     encuesta_tabla3_pregunta1 = make_field2 ('Llegar tarde a una cita')
     encuesta_tabla3_pregunta2 = make_field2 ('Comprar a vendedores ambulantes')

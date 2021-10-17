@@ -1,0 +1,30 @@
+{% extends "real_effort_numbers_nt_t/base/global.html" %} 
+
+{# ****************************************************************************************************************** #}
+{# *** TITLE *** #}
+{# ****************************************************************************************************************** #}
+{% block title %}
+    Pregunta sobre expectativas de productividad
+{% endblock %}
+
+{# ****************************************************************************************************************** #}
+{# *** CONTENT *** #}
+{# ****************************************************************************************************************** #}
+{% block content %}
+    <div class="wrapper instructions">
+        <p align = "justify">
+        <!--Jugador X-->
+        {% if player.id_in_group == 1 %}
+            ¿Cuántas restas cree que podrá hacer usted durante los 10 minutos de la Etapa 2?
+
+        <!--Jugador Y-->
+        {% else %}
+            ¿Cuántas restas cree que podrá hacer el jugador X durante los 10 minutos de la Etapa 2?
+        {% endif %}
+        <br>
+        {% formfield 'answers_correct_expected_stage_2' label="" %}
+
+        </p>
+    </div>
+{% next_button %}
+{% endblock %}

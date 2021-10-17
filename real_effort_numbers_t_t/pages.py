@@ -214,8 +214,8 @@ class CombinedResults(Page):
 class Stage2Instructions3(Page):
 
     form_model = 'player'
-    form_fields = ['control_question_4', 'control_question_5', 'control_question_6', 'control_question_7', 'control_question_8', 'control_question_9']
-    
+    form_fields = ['control_question_5', 'control_question_6', 'control_question_7', 'control_question_8', 'control_question_9']
+
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
 
@@ -284,6 +284,20 @@ class Decision2(Page):
             }
 
 #=======================================================================================================================
+
+class Stage2Expectation(Page):
+    form_model = 'player'
+    form_fields = ['answers_correct_expected_stage_2']
+
+    def before_next_page(self):
+        player = self.player.in_round(1)
+        list_atrr = self.form_fields
+        get_and_set_data(self.player, player, list_atrr)
+
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+
+#=======================================================================================================================
 class Start2(Page):
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
@@ -309,7 +323,7 @@ class AddNumbers2(Page):
     
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
-        
+ 
     def vars_for_template(self):     
         player = self.player                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
         number_1 = random.randint(1, Constants.num1_random_stage_2)
@@ -456,6 +470,9 @@ class CombinedResults2(Page):
         player.answers_total_stage_2 = answers_total_stage_2
         player.answers_wrong_stage_2 = answers_total_stage_2 - answer_correct_stage_2
 
+        player_round1.answers_correct_stage_2 =  player.answers_correct_stage_2
+        player_round1.answers_total_stage_2 = player.answers_total_stage_2
+        player_round1.answers_wrong_stage_2  = player.answers_wrong_stage_2 
 
         #Labels:
         if opponent_contract_decision == True:
@@ -539,6 +556,11 @@ class PlayCoin(Page):
 class DoubleMoney(Page):
     form_model = 'player'
     form_fields = ['amount_inversion']
+
+    def before_next_page(self):
+        player = self.player.in_round(1)
+        list_atrr = self.form_fields
+        get_and_set_data(self.player, player, list_atrr)
 
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
@@ -624,39 +646,12 @@ class SocioDemSurvey(Page):
         'esta_laborando' ,
         'ingreso_mensual' ,
         'gasto_mensual' ,
-        'alimentos',
-        'aseo',
-        'electronicos',
-        'transporte',
-        'servicios',
-        'diversion',
-        'ahorro',
-        'deudas',
         'offer_1',
         'Estabilidad',
         'Independencia',
         'Descanso',
         'Lucro',
         'Protección',
-        'encuesta_tabla1_pregunta1',
-        'encuesta_tabla1_pregunta2',
-        'encuesta_tabla1_pregunta3',
-        'encuesta_tabla1_pregunta4',
-        'encuesta_tabla1_pregunta5',
-        'encuesta_tabla1_pregunta6',
-        'encuesta_tabla1_pregunta7',
-        'encuesta_tabla1_pregunta8',
-        'encuesta_tabla1_pregunta9',
-        'encuesta_tabla1_pregunta10',
-        'encuesta_tabla2_pregunta1',
-        'encuesta_tabla2_pregunta2',
-        'encuesta_tabla2_pregunta3',
-        'encuesta_tabla2_pregunta4',
-        'encuesta_tabla2_pregunta5',
-        'encuesta_tabla2_pregunta6',
-        'encuesta_tabla2_pregunta7',
-        'encuesta_tabla2_pregunta8',
-        'encuesta_tabla2_pregunta9',
         'encuesta_tabla3_pregunta1',
         'encuesta_tabla3_pregunta2',
         'encuesta_tabla3_pregunta3',
@@ -695,15 +690,10 @@ class SocioDemSurvey(Page):
     
     def error_message(self, values):
         error_messages = dict()
-
-        sum = values['alimentos'] + values['aseo'] + values['electronicos'] + values['transporte'] \
-            + values['servicios'] + values['diversion'] + values['ahorro'] + values['deudas'] 
         list_iter = [values['Estabilidad'], values['Independencia'], values['Descanso'], \
                     values['Lucro'], values['Protección'] ]
         list_new = set(list_iter)
-        
-        if sum != 100:
-            error_messages['deudas'] = 'Recuerde que la suma de los porcentajes debe ser 100'
+
         if len(list_new) != len(list_iter):
             error_messages['Protección'] = 'Debe seleccionar un valor unico a cada item'
         return error_messages
@@ -753,8 +743,7 @@ class Greeting(Page):
 # *** MANAGEMENT STAGE
 # ******************************************************************************************************************** #
 stage_1_sequence = [Consent, GenInstructions, Stage1Questions, Start, AddNumbers, ResultsWaitPage, PartialResults, CombinedResults]
-stage_2_sequence = [Stage2Instructions3, Stage2Instructions4, RoleAssignment, Decision, ResultsWaitPage3, Decision2, Start2, AddNumbers2, ResultsWaitPage2, SecondQuoteY, WaitPageX, SecondQuoteX, CombinedResults2]
-#stage_2_sequence = [RoleAssignment, Decision, ResultsWaitPage3, Decision2, Start2, AddNumbers2, ResultsWaitPage2, SecondQuoteY, WaitPageX, SecondQuoteX, CombinedResults2]
+stage_2_sequence = [Stage2Instructions3, Stage2Instructions4, RoleAssignment, Decision, ResultsWaitPage3, Decision2, Stage2Expectation, Start2, AddNumbers2, ResultsWaitPage2, SecondQuoteY, WaitPageX, SecondQuoteX, CombinedResults2]
 stage_3_sequence = [PlayCoin, DoubleMoney, HeadTails, ResultsDoubleMoney, CombinedResults3, SocioDemSurvey, CombinedResults4, ReminderNequi, Greeting]
 
 page_sequence = stage_1_sequence + stage_2_sequence + stage_3_sequence

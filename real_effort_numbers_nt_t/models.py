@@ -66,7 +66,7 @@ class Constants(BaseConstants):
 
     #STAGE 2
     num_seconds_stage_2 = 60*10 # default: 60*10
-    mandatory_subtraction = 50 # default: 50
+    mandatory_subtraction = 65 # default: 65
     num1_random_stage_2 = 50 # default: 50
     num2_random_stage_2 = 99 # default: 99
 class Subsession(BaseSubsession):
@@ -126,6 +126,7 @@ class Player(BasePlayer):
 # *** STAGE 2
 # ******************************************************************************************************************** #
     answers_correct_stage_2 = models.IntegerField(initial=0)
+    answers_correct_expected_stage_2 = models.IntegerField(initial=0)
     answers_wrong_stage_2 = models.IntegerField(initial=0)
     answers_total_stage_2 = models.IntegerField(initial=0)
     payment_stage_2 = models.IntegerField(initial=0)
@@ -219,7 +220,7 @@ class Player(BasePlayer):
     )
 
     control_question_9 = models.IntegerField(
-        label="Si María le establece un contrato a Juan ¿Cuánto pagará Juan de multa si no alcanzara a completar las 50 restas? (por favor, registre su respuesta sin puntos ni comas)", 
+        label=f"Si María le establece un contrato a Juan ¿Cuánto pagará Juan de multa si no alcanzara a completar las {Constants.mandatory_subtraction} restas? (por favor, registre su respuesta sin puntos ni comas)", 
         min=0, 
         max=50000
     )

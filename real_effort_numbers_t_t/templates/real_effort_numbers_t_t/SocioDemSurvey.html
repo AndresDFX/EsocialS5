@@ -89,70 +89,6 @@
         <li> {% formfield player.ingreso_mensual %}</li>
         <li> {% formfield player.gasto_mensual %}</li>
 
-        <li>Suponga que sus ingresos mensuales son de 100 dólares ($100 US). Por favor, indique cual
-            sería el porcentaje de ese dinero que usted destinaria para las siguientes categorías <b>(recuerde que este porcentaje debe sumar 100)</b>:
-            <br>
-            <br>
-            <strong>Ejemplo:</strong> si de los 100 dólares usted destina 30 para el pago de la gasolina de su vehículo,
-            entonces, usted gasta el 30% de sus ingresos mensuales en la categoría “Transporte”.</li>
-
-        <br>
-
-        <table class="tabla_likert">
-            <tr>
-                <th>Categoría</th>
-                <th>Porcentaje del gasto</th>
-            </tr>
-            <tr>
-                <td>
-                    {{ form.alimentos.label }}
-                    <p>(como frutas, verduras, carnes, pollo, huevos,
-                    arroz, azúcar, aceite, granos, café, chocolate o
-                    panela)</p>
-                </td>
-                <td>{{ form.alimentos }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.aseo.label }}
-                    <p>(tanto de aseo personal como del hogar)</p>
-                </td>
-                <td>{{ form.aseo }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.electronicos.label }}
-                    <p>(como accesorios para celular, memorias USB)</p>
-                </td>
-                <td>{{ form.electronicos }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.transporte.label }}
-                    <p>(público o privado)</p>
-                </td>
-                <td>{{ form.transporte }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.servicios.label }}
-                    <p>(tanto públicos como privados)</p>
-                </td>
-                <td>{{ form.servicios }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.diversion.label }}
-                    <p>(como lo son espectáculos, festivales, etc.)</p>
-                </td>
-                <td>{{ form.diversion }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.ahorro.label }}</td>
-                <td>{{ form.ahorro }}</td>
-            </tr>
-            <tr>
-                <td>{{ form.deudas.label }}</td>
-                <td>{{ form.deudas }}</td>
-            </tr>
-        </table>
-        {{ formfield_errors 'deudas' }}
-
         <br>
 
         <li>Por favor, califique en una escala de 1 a 10 su disposición a asumir riesgos en general,
@@ -164,7 +100,7 @@
                 <tr>
                     <td>Para nada dispuesto</td>
                        {% for choice in form.offer_1 %}
-                    <td>{{ choice }}</td>
+                    <td>{{ choice.label }} {{ choice }}</td>
                        {% endfor %}
                     <td>Totalmente dispuesto</td>
                 </tr>
@@ -196,167 +132,6 @@
             {{ formfield_errors 'Protección' }}
             <br>
 
-        <li>Por favor, indique en qué medida está de acuerdo o no con cada una de las siguientes 10
-            afirmaciones. (Por favor, señale con una X sobre la casilla correspondiente)</li>
-
-            <br>
-
-            <table class="tabla_likert">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Fuertemente en desacuerdo</th>
-                        <th>En desacuerdo</th>
-                        <th>Ligeramente en desacuerdo</th>
-                        <th>Ni de acuerdo, ni en desacuerdo</th>
-                        <th>De acuerdo</th>
-                        <th>Fuertemente de acuerdo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td >{{form.encuesta_tabla1_pregunta1.label}}</td>
-                        {% for choice in form.encuesta_tabla1_pregunta1 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla1_pregunta2.label}}</td>
-                        {% for choice in form.encuesta_tabla1_pregunta2 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla1_pregunta3.label}}</td>
-                        {% for choice in form.encuesta_tabla1_pregunta3 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla1_pregunta4.label}}</td>
-                        {% for choice in form.encuesta_tabla1_pregunta4 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla1_pregunta5.label}}</td>
-                        {% for choice in form.encuesta_tabla1_pregunta5 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla1_pregunta6.label}}</td>
-                        {% for choice in form.encuesta_tabla1_pregunta6 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla1_pregunta7.label}}</td>
-                        {% for choice in form.encuesta_tabla1_pregunta7 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla1_pregunta8.label}}</td>
-                        {% for choice in form.encuesta_tabla1_pregunta8 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla1_pregunta9.label}}</td>
-                        {% for choice in form.encuesta_tabla1_pregunta9 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla1_pregunta10.label}}</td>
-                        {% for choice in form.encuesta_tabla1_pregunta10 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                </tbody>
-            </table>
-
-            <br>
-
-        <li>Por favor, indique en qué medida está de acuerdo o no con cada una de las siguientes 10
-            afirmaciones. (Por favor, señale con una X sobre la casilla correspondiente)</li>
-
-            <br>
-
-            <table class="tabla_likert">
-                <thead>
-                    <tr>
-                        <th></th>
-                        <th>Fuertemente en desacuerdo</th>
-                        <th>En desacuerdo</th>
-                        <th>Ligeramente en desacuerdo</th>
-                        <th>Ni de acuerdo, ni en desacuerdo</th>
-                        <th>De acuerdo</th>
-                        <th>Fuertemente de acuerdo</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>{{form.encuesta_tabla2_pregunta1.label}}</td>
-                        {% for choice in form.encuesta_tabla2_pregunta1 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla2_pregunta2.label}}</td>
-                        {% for choice in form.encuesta_tabla2_pregunta2 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla2_pregunta3.label}}</td>
-                        {% for choice in form.encuesta_tabla2_pregunta3 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla2_pregunta4.label}}</td>
-                        {% for choice in form.encuesta_tabla2_pregunta4 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla2_pregunta5.label}}</td>
-                        {% for choice in form.encuesta_tabla2_pregunta5 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla2_pregunta6.label}}</td>
-                        {% for choice in form.encuesta_tabla2_pregunta6 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla2_pregunta7.label}}</td>
-                        {% for choice in form.encuesta_tabla2_pregunta7 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla2_pregunta8.label}}</td>
-                        {% for choice in form.encuesta_tabla2_pregunta8 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-                    <tr>
-                        <td>{{form.encuesta_tabla2_pregunta9.label}}</td>
-                        {% for choice in form.encuesta_tabla2_pregunta9 %}
-                        <td>{{ choice }}</td>
-                        {% endfor %}
-                    </tr>
-
-                </tbody>
-            </table>
-
-            <br>
-
             <li>¿Qué tan apropiado o inapropiado cree usted que es hacer estas acciones? Por favor, utilice la siguiente escala:</li>
 
             <br>
@@ -379,7 +154,7 @@
             </table>
 
             <br>
-<!---->
+
             <table class="tabla_likert">
                 <tr>
                     <td>{{form.encuesta_tabla3_pregunta1.label}}</td>

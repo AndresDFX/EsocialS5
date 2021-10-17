@@ -69,7 +69,7 @@ class Constants(BaseConstants):
 
     #STAGE 2
     num_seconds_stage_2 = 60*10 # default: 60*10
-    mandatory_subtraction = 50 # default: 50
+    mandatory_subtraction = 65 # default: 65
     num1_random_stage_2 = 50 # default: 50
     num2_random_stage_2 = 99 # default: 99
 
@@ -95,13 +95,14 @@ class Subsession(BaseSubsession):
             self.group_randomly(fixed_id_in_group=True)
             for i in range(0,number_of_groups):
                 for j in range(0,Constants.players_per_group):
-                    self.get_group_matrix(objects=True)[i][j].team = team_label[i]
+                    self.get_group_matrix(objects=True)[i][j].team_stage_2 = team_label[i]
 
 class Group(BaseGroup):
     pass
 
 class Player(BasePlayer):
     team = models.StringField()
+    team_stage_2 = models.StringField()
     payment_total = models.IntegerField()
 
 # ******************************************************************************************************************** #
@@ -133,6 +134,7 @@ class Player(BasePlayer):
 # *** STAGE 2
 # ******************************************************************************************************************** #
     answers_correct_stage_2 = models.IntegerField(initial=0)
+    answers_correct_expected_stage_2 = models.IntegerField(initial=0)
     answers_wrong_stage_2 = models.IntegerField(initial=0)
     answers_total_stage_2 = models.IntegerField(initial=0)
     payment_stage_2 = models.IntegerField(initial=0)
@@ -226,7 +228,7 @@ class Player(BasePlayer):
     )
 
     control_question_9 = models.IntegerField(
-        label="Si María le establece un contrato a Juan ¿Cuánto pagará Juan de multa si no alcanzara a completar las 50 restas? (por favor, registre su respuesta sin puntos ni comas)", 
+        label=f"Si María le establece un contrato a Juan ¿Cuánto pagará Juan de multa si no alcanzara a completar las {Constants.mandatory_subtraction} restas? (por favor, registre su respuesta sin puntos ni comas)", 
         min=0, 
         max=50000
     )

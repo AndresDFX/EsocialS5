@@ -14,19 +14,20 @@
 
     <div class="wrapper instructions">
         <p align = "justify">
-            <b>Por favor, lea la siguiente situación  de la empresa Textilesa, cuidadosamente:</b><br>
+            <b>Por favor, lea la situación de la empresa Textilesa, cuidadosamente. Usted tomará mejores decisiones 
+            si presta ATENCIÓN a la información:</b><br><br>
 
-            Textilesa es una empresa que produce textiles. 
-            María es la propietaria (Jugador Y), y está buscando quién dirija las finanzas de la empresa. 
-            Juan ha aplicado al puesto de gerente financiero (Jugador X), y María debe decidir <b>si establece un contrato</b>, 
-            o <b>si le paga por la actividad sin establecer un contrato</b>. Los contratos no son gratis, 
-            si María decide establecer un contrato a Juan, ella deberá pagar $5,000 y Juan deberá pagar $3,000. 
-            En caso de que María decida pagarle a Juan sin establecer contrato, ninguno de los dos incurrirá en costos contractuales.<br><br>
+            Textilesa es una empresa que produce textiles. María es la propietaria (Jugador Y), 
+            y está buscando quién dirija las finanzas de la empresa. Juan se ha presentado al puesto de gerente financiero 
+            (Jugador X), y María debe decidir <b>si establece</b> un contrato, o si le paga por la actividad 
+            <b>sin establecer</b> un contrato. Los contratos <b>no son gratis</b>, si María decide establecer un contrato a Juan, 
+            ella deberá pagar <b>$5,000</b> y Juan deberá pagar <b>$3,000.</b> En caso de que María decida pagarle a 
+            Juan sin establecer contrato, ninguno de los dos incurrirá en costos contractuales.<br><br>
             
             Textilesa afronta un desajuste contable, por lo que el trabajo de Juan en esta etapa será el 
             de realizar restas para solucionar el problema.<br><br>
             
-            <b>Los pagos de Juan (jugador X):</b><br>
+            <b>¿Cuánto ganará Juan (X) por realizar la tarea?</b><br>
             Por este trabajo, María (Y) le pagará a Juan (X) $15,000 en 2 cuotas, de la siguiente manera:
             <ul>
                 <li>Una primera cuota de $8,000 obligatoria y por adelantado.</li>
@@ -37,11 +38,11 @@
                 </ul>
             </ul>
 
-            <b>Los pagos de María (Jugador Y):</b><br>
+            <b>¿Cuánto ganará María (Y)?</b><br>
             <ul>
-                <li>Si Juan (X) logra completar 50 restas correctas en 10 minutos habrá ajustado la contabilidad de Textilesa, 
+                <li>Si Juan (X) logra completar {{Constants.mandatory_subtraction}} restas correctas en 10 minutos habrá ajustado la contabilidad de Textilesa, 
                     por lo que María (jugador Y) ganará $30,000.</li>
-                <li>Si Juan (X) hace menos de 50 restas correctas, los pagos de María (Y) 
+                <li>Si Juan (X) hace menos de {{Constants.mandatory_subtraction}} restas correctas, los pagos de María (Y) 
                     dependerán de si ella decidió establecer un contrato:</li>
                 <ul>
                     <li><b>Si María (Y) contrató a Juan (X):</b> Juan (X) le pagará a María una multa por incumplimiento por un valor de $30,000.</li>
@@ -49,14 +50,12 @@
                 </ul>
             </ul>
             
-            <b>Ventajas y desventajas de la ausencia del contrato:</b><br><br>
-            <p align="center"><img src="{% static 'images/ventajas_desventajas_etapa2.png' %}" alt="Ventajas y desventajas de la ausencia del contrato" style= "height: 90%; width: 90%; object-fit: cover"></p>
+            <b>Resumen de las ganancias de los jugadores según la decisión de contratación.</b><br><br>
+            <p align="center"><img src="{% static 'images/ganancias_etapa2.png' %}" alt="las ganancias de la Etapa 2 para ambos jugadores" style= "width: 100%; object-fit: cover"></p>
             
-            <b>La tabla presentada a continuación resume de las ganancias de la Etapa 2 para ambos jugadores.</b><br><br>
-            <p align="center"><img src="{% static 'images/ganancias_etapa2.png' %}" alt="las ganancias de la Etapa 2 para ambos jugadores" style= "height: 90%; width: 90%; object-fit: cover"></p>
-            
-            <b>Las siguientes preguntas nos permiten verificar si las condiciones entre María y Juan
-            han sido claras para usted. Por favor, respóndalas.</b><br><br>
+            Las siguientes preguntas nos permiten verificar si las condiciones entre María y Juan han sido claras para usted, 
+            pues en esta etapa <b>USTED y otra persona se enfrentarán a la misma situación que María y Juan.</b> 
+            Por favor, responda:<br><br>
             
             {% formfields %}
 
