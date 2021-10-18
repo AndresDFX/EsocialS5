@@ -3,7 +3,6 @@
 {# ****************************************************************************************************************** #}
 {# *** STYLES *** #}
 {# ****************************************************************************************************************** #}
-
 {% block styles %}
     {{ super() }}
     <style>
@@ -20,19 +19,25 @@
 {# ****************************************************************************************************************** #}
 {# *** TITLE *** #}
 {# ****************************************************************************************************************** #}
-
 {% block title %}
-    Inicio Etapa 1
+    {% if player.round_number == 1 %}
+        Inicio Etapa 1
+    {% endif %}
 {% endblock %}
 
 {# ****************************************************************************************************************** #}
 {# *** CONTENT *** #}
 {# ****************************************************************************************************************** #}
-
 {% block content %}
     {{ super() }}
 
     <div class="row">
+        <div>
+            <p style="font-size:large;" align="center">
+                “Ya puedes tomar tu decisión.<br>
+                Para escoger, debes dar clic <font color="orange">SOBRE</font> la urna que prefieras”
+            </p>
+        </div>
         <div class="column">
             <a href="" target="_blank" class="urn" id="Y"><img src="{% static 'images/1stage/urn.png' %}" /></a>
             <p>Urna (Y): Esta urna contiene fichas con valores del 0 al 10. la mitad de las fichas ofrecen entre 3 y 8 puntos.</p>
@@ -40,7 +45,7 @@
         <div class="column">
             <a href="" target="_blank" class="urn" id="Z"><img src="{% static 'images/1stage/urn.png' %}" /></a>
             <p> Urna (Z): Esta urna contiene fichas con valores del 2 al 8. la mitad de las fichas ofrecen entre 2 y 6 puntos.</p>
-            <i>Recuerda que la Urna (Z) presenta un formulario adicional cada que es seleccionado</i>
+            <i>Si escoges la Urna Z, te pediremos llenar un formulario adicional</i>
         </div>
     </div>
 
@@ -54,7 +59,6 @@
 {# ****************************************************************************************************************** #}
 {# *** SCRIPTS *** #}
 {# ****************************************************************************************************************** #}
-
 {% block scripts %}
     <script>
 

@@ -4,13 +4,12 @@
 {# *** TITLE *** #}
 {# ****************************************************************************************************************** #}
 {% block title %}
-    Etapa 2 - Instrucciones
+    Etapa 2 - Decisión
 {% endblock %}
 
 {# ****************************************************************************************************************** #}
 {# *** CONTENT *** #}
 {# ****************************************************************************************************************** #}
-
 {% block content %}
     {{ super() }}
     Para la Etapa 3 ha recibido otros $5,000. Ya son suyos y se los agregaremos a su pago final si usted llega hasta el final. 
@@ -24,7 +23,6 @@
     <b>$6,000 = $4,000 (que usted guardó) + $2,000 (que usted ganó).</b>
     
     {% formfields %}
-    {% next_button %}
-    
-{% endblock %}
 
+{% next_button %}
+{% endblock %}

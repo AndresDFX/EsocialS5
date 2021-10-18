@@ -28,29 +28,15 @@ def get_and_set_data(self_player, player, list_atrr):
 # ******************************************************************************************************************** #
 class Consent(Page):
     form_model = 'player'
-    form_fields = ['accepts_terms']
+    form_fields = ['accepts_terms', 'num_temporal']
     
 
-    def is_displayed(self):
-        if(self.round_number == 1 and self.player.round_counter == 0):
-            return self.round_number == self.round_number
-
-#=======================================================================================================================
-class GenInstructions(Page):
-    
     def is_displayed(self):
         if(self.round_number == 1 and self.player.round_counter == 0):
             return self.round_number == self.round_number
 
 #=======================================================================================================================
 class Stage1Instructions(Page):
-
-    def is_displayed(self):
-        if(self.round_number == 1 and self.player.round_counter == 0):
-            return self.round_number == self.round_number
-    
-#=======================================================================================================================
-class Stage1Questions(Page):
     form_model = 'player'
     form_fields = [
         'question_1_stage1_instructions',
@@ -184,8 +170,7 @@ class Stage1Round(Page):
         player = self.player.in_round(1)
         if (player.round_counter % Constants.images_per_phase  != 0):
             player.round_counter = math.ceil(player.round_counter/5)*5
-    
-
+  
     def is_displayed(self):
         player = self.player.in_round(1)
         if (player.round_counter <= Constants.images_max_phase4):
@@ -320,41 +305,25 @@ class Stage1AllResult(Page):
 # ******************************************************************************************************************** #
 # *** STAGE 2
 # ******************************************************************************************************************** #
-class Stage2Start(Page):
+class Stage2PlayCoin(Page):
+    form_model = 'player'
 
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
 
 #=======================================================================================================================
-class Stage2Questions(Page):
 
+class Stage2DoubleMoney(Page):
     form_model = 'player'
-    form_fields = [
-        'question_1_stage2_instructions',
-        'question_2_stage2_instructions'
-    ]
+    form_fields = ['amount_inversion']
 
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
-    
     def before_next_page(self):
         player = self.player.in_round(1)
         list_atrr = self.form_fields
         get_and_set_data(self.player, player, list_atrr)
 
-    def error_message(self, values):
-        solutions = dict(
-            question_1_stage2_instructions='1',
-            question_2_stage2_instructions='3'
-        )
-
-        error_messages = dict()
-
-        for field_name in solutions:
-            if values[field_name] != solutions[field_name]:
-                error_messages[field_name] = 'Respuesta incorrecta, por favor lea de nuevo las instrucciones'
-
-        return error_messages
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
 
 #=======================================================================================================================
 class Stage2DoubleMoney(Page):
@@ -416,57 +385,6 @@ class Stage2ResultCoin(Page):
         }
     
 #=======================================================================================================================
-class ResultAllStages(Page):
-
-    form_model = 'player'
-    form_fields = ['choice_payment']
-    
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
-    
-    def before_next_page(self):
-        player = self.player.in_round(1)
-        list_atrr = self.form_fields
-        get_and_set_data(self.player, player, list_atrr)
-
-        if player.choice_payment == 1:
-            player.payment_total = player.payment_stage_1
-        else:
-            player.payment_total = player.payment_stage_2
-
-    def vars_for_template(self):
-        player = self.player.in_round(1)
-        payment_phase_1 = player.payment_phase_1
-        payment_phase_2 = player.payment_phase_2
-        payment_phase_3 = player.payment_phase_3
-        payment_phase_4 = player.payment_phase_4
-        payment_stage_1 = player.payment_stage_1
-        payment_stage_2 = player.payment_stage_2
-
-        return{
-            'payment_phase_1': payment_phase_1,
-            'payment_phase_2': payment_phase_2,
-            'payment_phase_3': payment_phase_3,
-            'payment_phase_4': payment_phase_4,
-            'payment_stage_1': payment_stage_1,
-            'payment_stage_2': payment_stage_2
-        } 
-
-#=======================================================================================================================
-class PaymentChoice(Page):
-
-    def is_displayed(self):
-        return self.round_number == Constants.num_rounds
-    
-    def vars_for_template(self):
-        player = self.player.in_round(1)
-        payment_total = player.payment_total
-
-        return{
-            'payment_total': payment_total
-        } 
-        
-#=======================================================================================================================
 class SocioDemSurvey(Page):
     form_model = 'player'
     form_fields = [
@@ -482,39 +400,12 @@ class SocioDemSurvey(Page):
         'esta_laborando' ,
         'ingreso_mensual' ,
         'gasto_mensual' ,
-        'alimentos',
-        'aseo',
-        'electronicos',
-        'transporte',
-        'servicios',
-        'diversion',
-        'ahorro',
-        'deudas',
         'offer_1',
         'Estabilidad',
         'Independencia',
         'Descanso',
         'Lucro',
         'Protección',
-        'encuesta_tabla1_pregunta1',
-        'encuesta_tabla1_pregunta2',
-        'encuesta_tabla1_pregunta3',
-        'encuesta_tabla1_pregunta4',
-        'encuesta_tabla1_pregunta5',
-        'encuesta_tabla1_pregunta6',
-        'encuesta_tabla1_pregunta7',
-        'encuesta_tabla1_pregunta8',
-        'encuesta_tabla1_pregunta9',
-        'encuesta_tabla1_pregunta10',
-        'encuesta_tabla2_pregunta1',
-        'encuesta_tabla2_pregunta2',
-        'encuesta_tabla2_pregunta3',
-        'encuesta_tabla2_pregunta4',
-        'encuesta_tabla2_pregunta5',
-        'encuesta_tabla2_pregunta6',
-        'encuesta_tabla2_pregunta7',
-        'encuesta_tabla2_pregunta8',
-        'encuesta_tabla2_pregunta9',
         'encuesta_tabla3_pregunta1',
         'encuesta_tabla3_pregunta2',
         'encuesta_tabla3_pregunta3',
@@ -538,24 +429,75 @@ class SocioDemSurvey(Page):
         'encuesta_tabla3_pregunta21',
         'encuesta_tabla3_pregunta22',
         'encuesta_tabla3_pregunta23',
+        'encuesta_tabla3_pregunta24',
+        'encuesta_tabla3_pregunta25',
         'encuesta_tabla3_pregunta26',
         ]
 
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+    
     def before_next_page(self):
         player = self.player.in_round(1)
         list_atrr = self.form_fields
         get_and_set_data(self.player, player, list_atrr)
     
+    def error_message(self, values):
+        error_messages = dict()
+        list_iter = [values['Estabilidad'], values['Independencia'], values['Descanso'], \
+                    values['Lucro'], values['Protección'] ]
+        list_new = set(list_iter)
+
+        if len(list_new) != len(list_iter):
+            error_messages['Protección'] = 'Debe seleccionar un valor unico a cada item'
+        return error_messages
+
+#=======================================================================================================================
+class ResultAllStages(Page):
+
+    form_model = 'player'
+
+    def is_displayed(self):
+        return self.round_number == Constants.num_rounds
+    
+    def before_next_page(self):
+        player = self.player.in_round(1)
+        list_atrr = self.form_fields
+        get_and_set_data(self.player, player, list_atrr)
+
+    def vars_for_template(self):
+        player = self.player.in_round(1)
+        payment_phase_1 = player.payment_phase_1
+        payment_phase_2 = player.payment_phase_2
+        payment_phase_3 = player.payment_phase_3
+        payment_phase_4 = player.payment_phase_4
+        payment_stage_1 = player.payment_stage_1
+        payment_stage_2 = player.payment_stage_2
+        payment_total = payment_stage_1 + payment_stage_2 + Constants.fixed_payment
+        player.payment_total = payment_total
+
+        return{
+            'payment_phase_1': payment_phase_1,
+            'payment_phase_2': payment_phase_2,
+            'payment_phase_3': payment_phase_3,
+            'payment_phase_4': payment_phase_4,
+            'payment_stage_1': payment_stage_1,
+            'payment_stage_2': payment_stage_2,
+            'payment_total': payment_total
+        } 
+    
+#=======================================================================================================================
+class Greeting(Page):
+
     def is_displayed(self):
         return self.round_number == Constants.num_rounds
 
 # ******************************************************************************************************************** #
 # *** MANAGEMENT PAGES
 # ******************************************************************************************************************** #
-#stage_1_sequence = [Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
-stage_1_sequence = [Consent, GenInstructions, Stage1Instructions, Stage1Questions, Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
-stage_2_sequence = [Stage2Start, Stage2Questions, Stage2DoubleMoney, Stage2HeadTails, Stage2ResultCoin]
-final_pages = [ResultAllStages, PaymentChoice, SocioDemSurvey]
+stage_1_sequence = [Consent, Stage1Instructions, Stage1Start, Stage1UrnZPreview, Stage1Urn, Stage1Round, Stage1ResultPhase, Stage1AllResult]
+stage_2_sequence = [Stage2PlayCoin, Stage2DoubleMoney, Stage2HeadTails, Stage2ResultCoin]
+final_pages = [SocioDemSurvey, ResultAllStages, Greeting]
 
 page_sequence = stage_1_sequence + stage_2_sequence + final_pages
 

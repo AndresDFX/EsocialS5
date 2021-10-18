@@ -14,28 +14,42 @@
 {% block content %}
     {{ super() }}
     
-    Por favor, lee las siguientes indicaciones:<br><br>
+    Por favor, lea <b>atentamente</b> las siguientes indicaciones. Usted tomará mejores decisiones si comprende bien 
+    la siguiente información:<br><br>
 
-    Usted realizará una tarea en la que deberá realizar la mayor cantidad de [cálculos numéricos / digitaciones] posibles.
-    Esto lo deberá hacer durante 20 rondas, cada una con una duración de un minuto, y recibirá un punto por cada respuesta correcta.
-    Mientras más respuestas correctas conteste, más puntos tendrá.<br><br>
+    Tenemos unos textos que han sido digitalizados pero muchos de ellos presentan problemas porque quienes digitaron 
+    cometieron errores. Durante 20 rondas usted nos ayudará a identificar <b>cuántos errores hay en cada uno de los textos.</b> 
+    Cada ronda contiene <b>5 textos</b>, y dura un minuto. Le pagaremos según el número de respuestas correctas que consiga.<br><br>
 
-    El valor de los puntos se determinará cada cinco rondas. Para hacer esto, se sacará una moneda al azar de una urna virtual. 
-    Cada moneda tiene un valor en unidades monetarias (UM) y cada UM equivale a 20 pesos. Usted sólo tendrá que elegir de qué urna 
-    desea que salga la moneda. Si por ejemplo, saliera una moneda de 5 UM, quiere decir que usted ganará 100 pesos (5UM x $20) por 
-    respuesta correcta.<br><br>
+    El <b>pago por respuesta correcta</b> se determinará <b>AL AZAR</b> sacando fichas de una urna virtual. 
+    Esto lo haremos <b>cada 5 rondas. </b> El valor de la moneda está definido en 
+    <b>unidades monetarias (UM) y cada UM equivale a 20 pesos. </b><br><br>
 
-    La Urna <b>Y</b> tiene monedas con valores entre 0 y 10. Sin embargo, no se sabe cuántas monedas hay de cada valor. 
-    La Urna <b>Z</b> tiene monedas con valores entre 2 y 8, pero tampoco se sabe cuántas monedas hay de cada una.<br><br>
+    <b>Su decisión:</b><br>
+    Usted <font color="orange">escoge la urna</font> de la cual sacaremos la fichas. Si por ejemplo, 
+    saliera una ficha de 5 UM, quiere decir que usted ganará 100 pesos (5UM x $20) 
+    por respuesta correcta en las próximas 5 rondas.<br>
+
+    <ul>
+        <li><b>La Urna Y:</b> tiene fichas con valores entre <font color="orange">0 y 10.</font> Sin embargo, <font color="orange">no se sabe cuántas</font> fichas hay de cada valor.</li>
+        <li><b>La Urna Z:</b> tiene fichas con valores entre <font color="orange">2 y 8,</font> pero tampoco se sabe cuántas fichas hay de cada una. Si quieres escoger esta urna, 
+            te pediremos que llenes un <b>formulario adicional.</b></li>
+    </ul>
 
     Usted deberá escoger la urna y el sistema seleccionará al azar la moneda.<br><br>
     <p align="center"><img src="{% static 'images/1stage/urn_decision.png' %}"  style= "height: 90%; width: 90%; object-fit: cover"/></p>
 
-    <b>Ejemplo</b>: Suponga que para las primeras cinco rondas usted escogió la Urna Y y la moneda seleccionada al
-    azar tiene un valor de 6 UM. Eso quiere decir que le pagaremos 6 UM por cada respuesta correcta en esas rondas, 
-    que en pesos serían $120 (6x$20). Si usted obtuvo 35 respuestas correctas, sus ganancias serán de 120X35 = $4.200
-    para esas cinco rondas.<br><br>
+    <b>Ejemplo:</b> Suponga que para las primeras cinco rondas usted escogió la Urna Y y la ficha seleccionada al azar tiene 
+    un valor de 6 UM. Eso quiere decir que le pagaremos 6 UM por cada respuesta correcta en esas rondas, 
+    que en pesos serían $120 (6x$20). Si usted obtuvo 35 respuestas correctas, sus ganancias serán de 
+    120X35 = $4.200 para esas cinco rondas.<br><br>
 
+    <b>Preguntas de comprensión:</b><br><br>
+
+    Con las siguientes preguntas sólo queremos verificar si las instrucciones fueron claras para ti y no van a afectar tus pagos. 
+    Por favor, escoge la respuesta correcta para cada una de las preguntas.<br>
+
+    {% formfields %}
     {% next_button %}
         
 {% endblock %}

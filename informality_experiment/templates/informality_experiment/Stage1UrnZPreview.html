@@ -10,12 +10,10 @@
 {# ****************************************************************************************************************** #}
 {# *** CONTENT *** #}
 {# ****************************************************************************************************************** #}
-
 {% block content %}
     {{ super() }}
     
-    Antes de proseguir con las tareas que le ayudarán a determinar su pago, debe revisar este formato, en donde se presentarán algunas frases que permiten observar una línea de seguimiento narrativa. 
-    Por favor verificar si las palabras fueron escritas en un orden claro y con lógica para usted. Tenga en cuenta que estas requieren ser escritas en el orden correcto dentro del cuadro de texto.
+    <b>Por favor, responda las siguientes preguntas usando como mínimo 50 caracteres en cada una.</b>
 
     {% formfields %}
     {% next_button %}
@@ -25,7 +23,6 @@
 {# ****************************************************************************************************************** #}
 {# *** SCRIPTS *** #}
 {# ****************************************************************************************************************** #}
-
 {% block scripts %}
     <script>
         let min_length = js_vars.min_length;

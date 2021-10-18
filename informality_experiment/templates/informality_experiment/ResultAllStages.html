@@ -14,22 +14,19 @@
 {% block content %}
     {{ super() }}
     
-    A continuación, se muestran sus ganancias por cada Etapa, 
-    deberá escoger con cuál desea quedarse y esta será la que finalmente le será remunerada.. <br><br>
+    A continuación, se muestran sus ganancias por cada Etapa.<br><br>
 
     <b>Etapa 1</b>
     <ul>
-        <li><b>Ganancia Fase 1:</b> ${{payment_phase_1}}</li>
-        <li><b>Ganancia Fase 2:</b> ${{payment_phase_2}}</li>
-        <li><b>Ganancia Fase 3:</b> ${{payment_phase_3}}</li>
-        <li><b>Ganancia Fase 4:</b> ${{payment_phase_4}}</li><br>
-        <li><b>Ganancia Etapa 1:</b> ${{payment_stage_1}}</li>
+        <li><b>Ganancias Fase 1:</b> ${{payment_phase_1}}</li>
+        <li><b>Ganancias Fase 2:</b> ${{payment_phase_2}}</li>
+        <li><b>Ganancias Fase 3:</b> ${{payment_phase_3}}</li>
+        <li><b>Ganancias Fase 4:</b> ${{payment_phase_4}}</li>
     </ul>
-    <b>Etapa 2</b>
-    <ul>
-        <li><b>Ganancia Etapa 2:</b> ${{payment_stage_2}}</li>
-    </ul>
-    {% formfields %}
-    {% next_button %}
-        
+    <b>Ganancias Etapa 1:</b> ${{payment_stage_1}}<br>
+    <b>Ganancias Etapa 2:</b> ${{payment_stage_2}}<br>
+    <b>Pago fijo por completar su participación:</b> ${{Constants.fixed_payment}}<br>
+    <b>GANANCIAS ACUMULADAS:</b> ${{payment_total}}<br>
+
+    {% next_button %}  
 {% endblock %}

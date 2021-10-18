@@ -15,15 +15,18 @@
     {{ super() }}
     
     Escogiste la Urna <b>{{urn_decision_label}}</b>.<br><br>
-    <b>Tu ficha es de: {{num_random}}. </b> <br><br>
+
+    El programa ha sacado una ficha al <b>azar </b>de valor: <font color="orange">{{num_random}}.</font><br><br>
+
     Por lo tanto, ese será tu pago por respuesta correcta en las próximas cinco rondas.<br><br>
     
     En las próximas cinco rondas leerás algunos párrafos que traen noticias o información relevante para algunos proyectos. 
     Estos textos han sido transcritos, pero por la calidad de la imagen original, es posible que haya algunos errores. 
-    Necesitamos que nos ayudes a contar el número de errores que hay entre la transcripción y el texto de la imagen. Cuanto más te acerques al número real de errores, mejor será tu desempeño:
+    Necesitamos que nos ayudes a contar el número de errores que hay entre la transcripción y el texto de la imagen. 
+    Cuanto más te acerques al número real de errores, mejor será tu desempeño:
     
     <ul>
-        <li><b>Te lo valdremos como respuesta correcta si identificas el número exacto de errores, o si sólo te equivocas por uno o dos valores. </b></li>
+        <li><b>Te lo valdremos como respuesta correcta si identificas el número exacto de errores, o si sólo te equivocas <font color="orange">por uno o dos</font> valores.</b></li>
     </ul>
     
     {% next_button %}

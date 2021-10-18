@@ -38,21 +38,9 @@ def makefield_string(label, choices):
 def makefield_integer():
     return models.IntegerField(initial=0)
 
-def makefield_urnz_question1():
+def makefield_urnz_question(label):
     return models.StringField(
-        label='1. A continuación, por favor de una descripción detallada del por qué la Urna (Z) fue su elección.',
-        widget=widgets.TextArea
-)
-
-def makefield_urnz_question2():
-    return models.StringField(
-        label='2. ¿En caso de existir unos pagos más altos en la Urna (Y) mantendría su decisión actual?.',
-        widget=widgets.TextArea
-)
-
-def makefield_urnz_question3():
-    return models.StringField(
-        label='3. Por favor de una descripción detallada de cómo esta elección puede relacionarse con alguna actividad del día a día.',
+        label=label,
         widget=widgets.TextArea
 )
 
@@ -79,11 +67,6 @@ def make_field2(label):
 # ******************************************************************************************************************** #
 # ***                                                           CHOICES
 # ******************************************************************************************************************** #
-
-choices_payment = [
-    [1,'Etapa 1'], 
-    [2,'Etapa 2']
-]
 
 #################### STAGE 1 #######################
 choices_gen_instructions1 = [
@@ -126,6 +109,7 @@ choices_gen_instructions5 = [
 class Constants(BaseConstants):
     name_in_url = 'informality_experiment'
     players_per_group = None
+    fixed_payment = 5000
     num_rounds = 20
 
     #STAGE 1
@@ -257,10 +241,7 @@ class Player(BasePlayer):
 
     round_counter = makefield_integer()
     payment_total = makefield_integer()
-    choice_payment = make_radiohorizontal_button(
-        "Seleccione el pago que desea: ",
-        choices_payment
-    )
+
 # ******************************************************************************************************************** #
 # *** STAGE 1
 # ******************************************************************************************************************** #
@@ -283,6 +264,8 @@ class Player(BasePlayer):
 
     ############################### Consent #########################
     accepts_terms = models.BooleanField()
+    num_temporal = models.IntegerField(
+        label="Por favor, ingrese el numero de identificación temporal que le llegó en el correo de invitación")
 
     ############################ Instructions #######################
     question_1_stage1_instructions = makefield_string(
@@ -311,24 +294,24 @@ class Player(BasePlayer):
     )
 
     ############################ PHASE 1 ############################
-    question_1_phase1_urnz = makefield_urnz_question1()
-    question_2_phase1_urnz = makefield_urnz_question2()
-    question_3_phase1_urnz = makefield_urnz_question3()
+    question_1_phase1_urnz = makefield_urnz_question('¿Cuéntenos cómo se ha sentido en esta actividad hasta ahora y por qué?')
+    question_2_phase1_urnz = makefield_urnz_question('¿Cómo define usted la incertidumbre?')
+    question_3_phase1_urnz = makefield_urnz_question('¿Cuál cree usted que es el principal problema del país?')
     
     ############################ PHASE 2 ############################
-    question_1_phase2_urnz = makefield_urnz_question1()
-    question_2_phase2_urnz = makefield_urnz_question2()
-    question_3_phase2_urnz = makefield_urnz_question3()
+    question_1_phase2_urnz = makefield_urnz_question('¿De qué cree usted que se trata esta actividad que está realizando?')
+    question_2_phase2_urnz = makefield_urnz_question('¿A qué cree usted que se dedica la Cámara de Comercio?')
+    question_3_phase2_urnz = makefield_urnz_question('¿Cuál cree usted que es el principal problema que enfrenta el Valle del Cauca?')
 
     ############################ PHASE 3 ############################
-    question_1_phase3_urnz = makefield_urnz_question1()
-    question_2_phase3_urnz = makefield_urnz_question2()
-    question_3_phase3_urnz = makefield_urnz_question3() 
+    question_1_phase3_urnz = makefield_urnz_question('Cuéntenos sobre alguna encuesta que usted haya respondido recientemente ¿para qué era? ¿le pareció entretenida?')
+    question_2_phase3_urnz = makefield_urnz_question('¿A qué cree usted que se dedica el Ministerio de Industria, Comercio y Turismo?')
+    question_3_phase3_urnz = makefield_urnz_question('¿Cuál cree usted que es el principal problema que enfrenta Suramérica?')
 
     ############################ PHASE 4 ############################
-    question_1_phase4_urnz = makefield_urnz_question1() 
-    question_2_phase4_urnz = makefield_urnz_question2()
-    question_3_phase4_urnz = makefield_urnz_question3()
+    question_1_phase4_urnz = makefield_urnz_question('¿Cuántas veces ha escogido usted la Urna Z en esta actividad? ¿Por qué la ha escogido?')
+    question_2_phase4_urnz = makefield_urnz_question('¿En qué se le parecen las decisiones que usted está tomando en esta encuesta con las decisiones que usted toma diariamente?')
+    question_3_phase4_urnz = makefield_urnz_question('Si pudiera aconsejar a otras personas que están realizando esta encuesta sobre la urna que deben elegir, ¿qué les diría?')
     
 
 # ******************************************************************************************************************** #
@@ -336,17 +319,6 @@ class Player(BasePlayer):
 # ******************************************************************************************************************** #
     payment_stage_2 = makefield_integer()
     flip_value = models.FloatField(initial=0.0)
-
-    ############################ Instructions #######################
-    question_1_stage2_instructions = makefield_string(
-        '1. Imagina que has decidido invertir $4,000 y que la ficha lanzada ha caído sello ¿Cuánto dinero ganarás?',
-        choices_gen_instructions4
-    )
-
-    question_2_stage2_instructions = makefield_string(
-        '2. En caso de que inviertas $4000 y la ficha lanzada caiga en cara ¿Cuánto dinero ganarás?',
-        choices_gen_instructions5
-    )
 
     amount_inversion = models.IntegerField(
         label="Por favor, indica el monto que invertirás en el activo de riesgo (sin puntos o comas)", 
@@ -441,16 +413,7 @@ class Player(BasePlayer):
         ]
     )
 
-    alimentos = models.IntegerField(label="Alimentos")
-    aseo = models.IntegerField(label="Productos de aseo")
-    electronicos = models.IntegerField(label="Artículos electrónicos")
-    transporte = models.IntegerField(label="Transporte")
-    servicios = models.IntegerField(label="Pago de servicios")
-    diversion  = models.IntegerField(label="Diversión y ocio")
-    ahorro = models.IntegerField(label="Ahorro")
-    deudas = models.IntegerField(label="Pago de deudas")
-
-    #Escala Likert
+    #Esacala Likert
     offer_1 = models.IntegerField(widget=widgets.RadioSelect, choices=[1,2,3,4,5,6,7,8,9,10], label= "")
 
     Estabilidad = models.IntegerField(choices=[1,2,3,4,5], label='Mantenerse invariable o inalterable en el mismo lugar, estado o situación.')
@@ -458,27 +421,6 @@ class Player(BasePlayer):
     Descanso = models.IntegerField(choices=[1,2,3,4,5], label='Reposar fuerzas a través de un estado inactivo')
     Lucro = models.IntegerField(choices=[1,2,3,4,5], label='Ganancia o provecho de algún actividad u objeto.')
     Protección = models.IntegerField(choices=[1,2,3,4,5], label='Seguridad o respaldo frente a un acontecimiento.')
-
-    encuesta_tabla1_pregunta1 = make_field('Por lo general, cuando consigo lo que quiero es porque me he esforzado por lograrlo.')
-    encuesta_tabla1_pregunta2 = make_field('Cuando hago planes estoy casi seguro (a) que conseguiré que lleguen a buen término.')
-    encuesta_tabla1_pregunta3 = make_field('Prefiero los juegos que entrañan algo de suerte que los que sólo requieren habilidad.')
-    encuesta_tabla1_pregunta4 = make_field('Si me lo propongo, puedo aprender casi cualquier cosa.')
-    encuesta_tabla1_pregunta5 = make_field('Mis mayores logros se deben más que nada a mi trabajo arduo y a mi capacidad.')
-    encuesta_tabla1_pregunta6 = make_field('Por lo general no establezco metas porque se me dificulta mucho hacer lo necesario para alcanzarlas.')
-    encuesta_tabla1_pregunta7 = make_field('La competencia desalienta la excelencia.')
-    encuesta_tabla1_pregunta8 = make_field('Las personas a menudo salen adelante por pura suerte.')
-    encuesta_tabla1_pregunta9 = make_field('En cualquier tipo de examen o competencia me gusta comparar mis calificaciones con las de los demás.')
-    encuesta_tabla1_pregunta10 = make_field('Pienso que no tiene sentido empeñarme en trabajar en algo que es demasiado difícil para mí.')
-
-    encuesta_tabla2_pregunta1 = make_field('Podré alcanzar la mayoría de los objetivos que me he propuesto.')
-    encuesta_tabla2_pregunta2 = make_field('Cuando me enfrento a tareas difíciles, estoy seguro de que las cumpliré.')
-    encuesta_tabla2_pregunta3 = make_field('En general, creo que puedo obtener resultados que son importantes para mí.')
-    encuesta_tabla2_pregunta4 = make_field('Creo que puedo tener éxito en cualquier esfuerzo que me proponga.')
-    encuesta_tabla2_pregunta5 = make_field('Seré capaz de superar con éxito muchos desafíos.')
-    encuesta_tabla2_pregunta6 = make_field('Confío en que puedo realizar eficazmente muchas tareas diferentes.')
-    encuesta_tabla2_pregunta7 = make_field('Comparado con otras personas, puedo hacer la mayoría de las tareas muy bien.')
-    encuesta_tabla2_pregunta8 = make_field('Incluso cuando las cosas son difíciles, puedo realizarlas bastante bien.')
-    encuesta_tabla2_pregunta9 = make_field('Podré alcanzar la mayoría de los objetivos que me he propuesto.')
 
     encuesta_tabla3_pregunta1 = make_field2 ('Llegar tarde a una cita')
     encuesta_tabla3_pregunta2 = make_field2 ('Comprar a vendedores ambulantes')
@@ -503,4 +445,7 @@ class Player(BasePlayer):
     encuesta_tabla3_pregunta21 = make_field2 ('Comprar productos sin factura')
     encuesta_tabla3_pregunta22 = make_field2 ('Subarrendar una habitación')
     encuesta_tabla3_pregunta23 = make_field2 ('Vivir en una habitación subarrendada')
+    encuesta_tabla3_pregunta24 = make_field2 ('No usar el paso cebra o los puentes peatonales para cruzar una calle')
+    encuesta_tabla3_pregunta25 = make_field2 ('Cruzar caminando una calle cuando el semáforo peatonal está en rojo')
     encuesta_tabla3_pregunta26 = make_field2 ('Circular en bicicleta por el andén (no usar la cicloruta)')
+

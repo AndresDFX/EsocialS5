@@ -66,5 +66,15 @@
                 $('#id_num_entered').val(0); 
             }
         }
+
+        //Funcion que permite enviar la respuesta del ultimo segundo
+        $(function updateLastSecond() {
+            $('.otree-timer__time-left').on('update.countdown', function (event) {
+                if (event.offset.totalSeconds <= 1) {
+                    sendAnswer();
+                }
+            });
+        });
+        
     </script>
 {% endblock %}

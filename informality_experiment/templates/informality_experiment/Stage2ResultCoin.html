@@ -10,14 +10,15 @@
 {# ****************************************************************************************************************** #}
 {# *** CONTENT *** #}
 {# ****************************************************************************************************************** #}
-
 {% block content %}
+
     {{ super() }}
-        
-    Usted invirtió <b>${{ amount_inversion }}</b> y la moneda cayó <b>{{cara_sello_name}}</b>. 
-    Su pago equivale a <b>${{payment_stage_2}}</b>
-    
+    Usted invirtió <b>${{amount_inversion}}</b> y la moneda cayó <b>{{cara_sello_name}}</b>. 
+    Usted ha ganado <b>${{payment_stage_2}}</b> en la Etapa 2.
+
     {% next_button %}
-    
+
+
 {% endblock %}
+
 
