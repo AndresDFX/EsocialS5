@@ -18,14 +18,14 @@
             {% if player.id_in_group == 1 %}
                 <!-- Sin contrato -->
                 {% if opponent_contract_decision == False %}
-                    La etapa 2 comenzará a continuación. Luego de presionar el botón “Siguiente” empezará un conteo regresivo y usted tendrá 10 minutos para completar las <b>50 restas</b> 
+                    La etapa 2 comenzará a continuación. Luego de presionar el botón “Siguiente” empezará un conteo regresivo y usted tendrá 10 minutos para completar las <b>{{Constants.mandatory_subtraction}} restas</b> 
                     que le permitirán al Jugador Y <b>ganar $30,000</b>. Como el jugador Y no estableció contrato, si usted <b>no completa</b> las restas, usted <b>no asumirá ningún costo</b>, 
                     y el jugador Y <b>no ganará nada.</b> 
                     Por favor, presione el botón cuando esté preparado para iniciar.
 
                 <!-- Con contrato -->
                 {% else %}
-                    La etapa 2 comenzará a continuación. Luego de presionar el botón “Siguiente” empezará un conteo regresivo y usted tendrá 10 minutos para completar las <b>50 restas</b> 
+                    La etapa 2 comenzará a continuación. Luego de presionar el botón “Siguiente” empezará un conteo regresivo y usted tendrá 10 minutos para completar las <b>{{Constants.mandatory_subtraction}} restas</b> 
                     que le permitirán al Jugador Y <b>ganar $30,000</b>. Como el jugador Y estableció contrato, usted debe pagar $3,000; además, si usted <b>no completa</b> las restas, 
                     se transferirán $30,000 de sus ganancias al jugador Y. 
                     Por favor, presione el botón cuando esté preparado para iniciar.
@@ -35,7 +35,7 @@
             {% else %}
                 <!-- Sin contrato -->
                 {% if contract_decision == False %}
-                    Usted ha decidido no establecer un contrato. Si el jugador X  completa las 50 restas, usted ganará $30,000. 
+                    Usted ha decidido no establecer un contrato. Si el jugador X  completa las {{Constants.mandatory_subtraction}} restas, usted ganará $30,000. 
                     Si el Jugador X <b>no completa</b> las restas usted <b>no ganará nada.</b> 
                     Por favor, presione el botón cuando esté preparado para iniciar.
 
