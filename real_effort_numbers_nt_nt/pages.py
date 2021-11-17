@@ -633,6 +633,8 @@ class CombinedResults3(Page):
 class SocioDemSurvey(Page):
     form_model = 'player'
     form_fields = [
+        'genero',
+        'estrato',
         'edad',
         'ciudad',
         'rol_hogar',

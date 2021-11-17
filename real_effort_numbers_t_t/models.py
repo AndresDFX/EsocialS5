@@ -301,6 +301,23 @@ class Player(BasePlayer):
 # ******************************************************************************************************************** #
 # *** Variables Encuesta sociodemográfica
 # ******************************************************************************************************************** #
+    genero = models.StringField(
+        label="¿Cuál es su género?",
+        choices=[["Masculino", "Masculino"], 
+                ["Femenino", "Femenino"],
+                ["NoBinario", "No Binario"],
+                ["NoDice", "Prefiero no decirlo"]]
+    )
+    estrato = models.StringField(
+        label="¿Cuál es el estrato de la vivienda en la cual habita actualmente?",
+        choices = [
+            [1, "1"],
+            [2, "2"],
+            [3, "3"],
+            [4, "4"],
+            [5, "5"],
+            [6, "6"]],
+    )
     edad = models.IntegerField(label='¿Cuántos años cumplidos tiene?')
     ciudad = models.StringField(label='¿En qué ciudad vive actualmente?')
 

@@ -634,6 +634,8 @@ class CombinedResults3(Page):
 class SocioDemSurvey(Page):
     form_model = 'player'
     form_fields = [
+        'genero',
+        'estrato',
         'edad',
         'ciudad',
         'rol_hogar',
@@ -747,4 +749,5 @@ stage_2_sequence = [Stage2Instructions3, Stage2Instructions4, RoleAssignment, De
 stage_3_sequence = [PlayCoin, DoubleMoney, HeadTails, ResultsDoubleMoney, CombinedResults3, SocioDemSurvey, CombinedResults4, ReminderNequi, Greeting]
 
 page_sequence = stage_1_sequence + stage_2_sequence + stage_3_sequence
+
 
